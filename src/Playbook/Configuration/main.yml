@@ -1,0 +1,8 @@
+title: Main
+actions:
+- !writeStatus: {status: 'Installing Drivers'}
+- !task: {path: 'Tasks\drivers.yml'}
+- !writeStatus: {status: 'Installing Steam'}
+- !task: {path: 'Tasks\steam.yml'}
+- !writeStatus: {status: 'Installing Steam Deck Tools',  option: "yesdecktools"}
+- !task: {path: 'Tasks\steamdecktools.yml',  option: "yesdecktools"}
