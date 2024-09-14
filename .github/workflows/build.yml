@@ -20,3 +20,9 @@ jobs:
       - name: Zip Playbook directory
         run: |
           7z a DeckXP.apbx ./src/Playbook/* -p"malte"
+    
+      - name: Upload DeckXP.apbx as artifact
+        uses: actions/upload-artifact@v3
+        with:
+            name: DeckXP-apbx
+            path: DeckXP.apbx
