@@ -18,5 +18,5 @@ A tool that automatically sets up your Windows for Steam Deck gaming!
 
 **Download DeckXP from [GitHub Releases](https://github.com/veygax/DeckXP/releases/latest) or the latest nightly build from [nightly.link](https://nightly.link/veygax/DeckXP/workflows/build/main?preview).**
 
-*Install this with [AtlasOS](https://atlasos.net) for the best experience.
+*Install this with [AtlasOS](https://atlasos.net) for the best experience.*
     
