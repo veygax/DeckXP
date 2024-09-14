@@ -1,0 +1,17 @@
+title: Creating Shortcuts
+actions:
+- !powershell:
+  command: |
+    $steamPath = 'C:\Program Files (x86)\Steam\Steam.exe'
+    $desktop = [System.Environment]::GetFolderPath('Desktop')
+    $shortcutPath = Join-Path $desktop 'Return to Gaming Mode.lnk'
+    $iconUrl = 'https://drive.google.com/uc?export=download&id=1KdbDLKe36HtutAfzo6zzUcNEKZ1_WMYq'
+    $iconFolder = "$env:USERPROFILE\DeckXP"
+    New-Item -Path $iconFolder -ItemType Directory -Force
+    $iconPath = "$iconFolder\steam_bigpicture.ico"
+    Invoke-WebRequest -Uri $iconUrl -OutFile $iconPath
+    $wShell = New-Object -ComObject WScript.Shell
+    $shortcut = $wShell.CreateShortcut($shortcutPath)
+    $shortcut.TargetPath = "$steamPath -start steam://open/bigpicture"
+    $shortcut.IconLocation = $iconPath
+    shortcut.Save()

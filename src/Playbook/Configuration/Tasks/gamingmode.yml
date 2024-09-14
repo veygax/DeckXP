@@ -1,0 +1,4 @@
+title: Gaming Mode Boot
+actions:
+- !powershell: 
+  command: schtasks /create /tn "BootIntoGamingMode" /tr "steam://open/bigpicture" /sc onlogon /rl highest /f

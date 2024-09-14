@@ -1,0 +1,9 @@
+title: Installing Steam Deck Tools
+actions:
+- !powershell: 
+  command: |
+    $installerUrl = 'https://github.com/ayufan/steam-deck-tools/releases/download/0.7.3/SteamDeckTools-0.7.3-setup.exe'
+    $installerPath = "$env:TEMP\SteamDeckTools-0.7.3-setup.exe"
+    Invoke-WebRequest -Uri $installerUrl -OutFile $installerPath
+    Start-Process -FilePath $installerPath -NoNewWindow -Wait
+    Remove-Item -Path $installerPath

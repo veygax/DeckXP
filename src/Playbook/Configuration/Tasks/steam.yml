@@ -1,4 +1,9 @@
 title: Install Steam
 actions:
 - !powershell:
-  command:  $steamInstallerUrl = 'https://cdn.cloudflare.steamstatic.com/client/installer/SteamSetup.exe'; $installerPath = '$env:TEMP\SteamSetup.exe'; Invoke-WebRequest -Uri $steamInstallerUrl -OutFile $installerPath; Start-Process -FilePath $installerPath -ArgumentList '/S' -NoNewWindow -Wait; Remove-Item -Path $installerPath; $steamPath = 'C:\Program Files (x86)\Steam\Steam.exe'; $desktop = [System.Environment]::GetFolderPath('Desktop'); $shortcutPath = Join-Path $desktop 'Return to Gaming Mode.lnk'; $iconPath = 'C:\Path\To\Your\Icon\steam_bigpicture.ico'; $wShell = New-Object -ComObject WScript.Shell; $shortcut = $wShell.CreateShortcut($shortcutPath); $shortcut.TargetPath = '$steamPath -start steam://open/bigpicture'; $shortcut.IconLocation = $iconPath; $shortcut.Save()
+  command: |
+    $steamInstallerUrl = 'https://cdn.cloudflare.steamstatic.com/client/installer/SteamSetup.exe'
+    $installerPath = '$env:TEMP\SteamSetup.exe'
+    Invoke-WebRequest -Uri $steamInstallerUrl -OutFile $installerPath
+    Start-Process -FilePath $installerPath -ArgumentList '/S' -NoNewWindow -Wait
+    Remove-Item -Path $installerPath

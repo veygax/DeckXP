@@ -1,0 +1,22 @@
+name: Build DeckXP Playbook
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  create-archive:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Install 7zip
+        run: sudo apt-get install -y p7zip-full
+
+      - name: Zip Playbook directory
+        run: |
+          7z a DeckXP.apbx ./src/Playbook/* -p"malte"
