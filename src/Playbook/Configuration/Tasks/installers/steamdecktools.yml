@@ -5,5 +5,5 @@ actions:
     command: |
       curl -L -o "%TEMP%\SteamDeckTools-0.7.3-setup.exe" "https://github.com/ayufan/steam-deck-tools/releases/download/0.7.3/SteamDeckTools-0.7.3-setup.exe"
     wait: true
-  - !run: {path: '%TEMP%\SteamDeckTools-0.7.3-setup.exe', args: '/silent', wait: true}
+  - !run: {exe: '%TEMP%\SteamDeckTools-0.7.3-setup.exe', args: '/silent', wait: true}
   - !file: {path: '%TEMP%\SteamDeckTools-0.7.3-setup.exe'}
