@@ -1,76 +1,60 @@
 title: Install Drivers
 actions:
   - !writeStatus: {status: 'Installing APU Drivers'}
-  - !powerShell:
+  - !cmd:
     command: |
-      $driverUrl = 'https://steamdeck-packages.steamos.cloud/misc/windows/drivers/Aerith_Sephiroth_Windows_Driver_2309131113.zip'
-      $zipPath = "$env:TEMP\\driver.zip"
-      $extractPath = "$env:TEMP\\driver_extracted"
-      Invoke-WebRequest -Uri $driverUrl -OutFile $zipPath
-      Expand-Archive -Path $zipPath -DestinationPath $extractPath -Force
+      curl -L -o "%TEMP%\driver.zip" "https://steamdeck-packages.steamos.cloud/misc/windows/drivers/Aerith_Sephiroth_Windows_Driver_2309131113.zip"
+      tar -xf "%TEMP%\driver.zip" -C "%TEMP%\driver_extracted"
     wait: true
-  - !run: {path: '%temp%\driver_extracted\GFX Driver_48.0.8.30928_230906a1-394729E-2309131113\Setup.exe', args: '-install', wait: true}
-  - !file: {path: '%temp%\driver_extracted'}
-  - !file: {path: '%temp%\driver.zip'}
+  - !run: {path: '%TEMP%\driver_extracted\GFX Driver_48.0.8.30928_230906a1-394729E-2309131113\Setup.exe', args: '-install', wait: true}
+  - !file: {path: '%TEMP%\driver_extracted'}
+  - !file: {path: '%TEMP%\driver.zip'}
 
-  - !powerShell:
+  - !writeStatus: {status: 'Installing WiFi Fix'}
+  - !cmd:
     command: |
-      $wifiFixUrl = 'https://github.com/ryanrudolfoba/SteamDeck-Windows-WiFi-Fix/archive/refs/heads/main.zip'
-      $zipPath = "$env:TEMP\\wifi_fix.zip"
-      $extractPath = "$env:TEMP\\wifi_fix_extracted"
-      Invoke-WebRequest -Uri $wifiFixUrl -OutFile $zipPath
-      Expand-Archive -Path $zipPath -DestinationPath $extractPath -Force
+      curl -L -o "%TEMP%\wifi_fix.zip" "https://github.com/ryanrudolfoba/SteamDeck-Windows-WiFi-Fix/archive/refs/heads/main.zip"
+      tar -xf "%TEMP%\wifi_fix.zip" -C "%TEMP%\wifi_fix_extracted"
     wait: true
-  - !run: {path: '%temp%\wifi_fix_extracted\SteamDeck-Windows-WiFi-Fix-main\Setup.bat', wait: true}
-  - !file: {path: '%temp%\wifi_fix.zip'}
-  - !file: {path: '%temp%\wifi_fix_extracted'}
+  - !run: {path: '%TEMP%\wifi_fix_extracted\SteamDeck-Windows-WiFi-Fix-main\Setup.bat', wait: true}
+  - !file: {path: '%TEMP%\wifi_fix.zip'}
+  - !file: {path: '%TEMP%\wifi_fix_extracted'}
 
   - !writeStatus: {status: 'Installing Bluetooth Drivers'}
-  - !powerShell:
+  - !cmd:
     command: |
-      $driverUrl = 'https://steamdeck-packages.steamos.cloud/misc/windows/drivers/RTBlueR_FilterDriver_1041.3005_1201.2021_new_L.zip'
-      $zipPath = "$env:TEMP\\driver2.zip"
-      $extractPath = "$env:TEMP\\driver2_extracted"
-      Invoke-WebRequest -Uri $driverUrl -OutFile $zipPath
-      Expand-Archive -Path $zipPath -DestinationPath $extractPath -Force
+      curl -L -o "%TEMP%\driver2.zip" "https://steamdeck-packages.steamos.cloud/misc/windows/drivers/RTBlueR_FilterDriver_1041.3005_1201.2021_new_L.zip"
+      tar -xf "%TEMP%\driver2.zip" -C "%TEMP%\driver2_extracted"
     wait: true
-  - !run: {path: '%temp%\driver2_extracted\InstallDriver.cmd', wait: true}
-  - !file: {path: '%temp%\driver2_extracted'}
-  - !file: {path: '%temp%\driver2.zip'}
+  - !run: {path: '%TEMP%\driver2_extracted\InstallDriver.cmd', wait: true}
+  - !file: {path: '%TEMP%\driver2_extracted'}
+  - !file: {path: '%TEMP%\driver2.zip'}
 
   - !writeStatus: {status: 'Installing SD Card Drivers'}
-  - !powerShell: 
+  - !cmd:
     command: |
-      $driverUrl = 'https://steamdeck-packages.steamos.cloud/misc/windows/drivers/BayHub_SD_STOR_installV3.4.01.89_W10W11_logoed_20220228.zip'
-      $zipPath = "$env:TEMP\\sd_driver.zip"
-      $extractPath = "$env:TEMP\\sd_driver_extracted"
-      Invoke-WebRequest -Uri $driverUrl -OutFile $zipPath
-      Expand-Archive -Path $zipPath -DestinationPath $extractPath -Force
+      curl -L -o "%TEMP%\sd_driver.zip" "https://steamdeck-packages.steamos.cloud/misc/windows/drivers/BayHub_SD_STOR_installV3.4.01.89_W10W11_logoed_20220228.zip"
+      tar -xf "%TEMP%\sd_driver.zip" -C "%TEMP%\sd_driver_extracted"
     wait: true
-  - !run: {path: '%temp%\sd_driver_extracted\setup.exe', args: '-s', wait: true}
-  - !file: {path: '%temp%\sd_driver_extracted'}
-  - !file: {path: '%temp%\sd_driver.zip'}
+  - !run: {path: '%TEMP%\sd_driver_extracted\setup.exe', args: '-s', wait: true}
+  - !file: {path: '%TEMP%\sd_driver_extracted'}
+  - !file: {path: '%TEMP%\sd_driver.zip'}
 
   - !writeStatus: {status: 'Installing Audio Drivers'}
-  - !powerShell: 
+  - !cmd:
     command: |
-      $driverUrl = 'https://steamdeck-packages.steamos.cloud/misc/windows/drivers/cs35l41-V1.2.1.0.zip'
-      $zipPath = "$env:TEMP\\cs35l41_driver.zip"
-      $extractPath = "$env:TEMP\\cs35l41_driver_extracted"
-      Invoke-WebRequest -Uri $driverUrl -OutFile $zipPath
-      Expand-Archive -Path $zipPath -DestinationPath $extractPath -Force
+      curl -L -o "%TEMP%\cs35l41_driver.zip" "https://steamdeck-packages.steamos.cloud/misc/windows/drivers/cs35l41-V1.2.1.0.zip"
+      tar -xf "%TEMP%\cs35l41_driver.zip" -C "%TEMP%\cs35l41_driver_extracted"
     wait: true
-  - !cmd: {command: 'pnputil /add-driver %temp%\cs35l41_driver_extracted\cs35l41.inf', wait: true}
-  - !file: {path: '%temp%\cs35l41_driver_extracted'}
-  - !file: {path: '%temp%\cs35l41_driver.zip'}
-  - !powerShell: 
+  - !cmd: {command: "pnputil /add-driver %TEMP%\cs35l41_driver_extracted\cs35l41.inf", wait: true}
+  - !file: {path: '%TEMP%\cs35l41_driver_extracted'}
+  - !file: {path: '%TEMP%\cs35l41_driver.zip'}
+
+  - !cmd:
     command: |
-      $driverUrl = 'https://steamdeck-packages.steamos.cloud/misc/windows/drivers/NAU88L21_x64_1.0.6.0_WHQL%20-%20DUA_BIQ_WHQL.zip'
-      $zipPath = "$env:TEMP\\NAU88L21_driver.zip"
-      $extractPath = "$env:TEMP\\NAU88L21_driver_extracted"
-      Invoke-WebRequest -Uri $driverUrl -OutFile $zipPath
-      Expand-Archive -Path $zipPath -DestinationPath $extractPath -Force
+      curl -L -o "%TEMP%\NAU88L21_driver.zip" "https://steamdeck-packages.steamos.cloud/misc/windows/drivers/NAU88L21_x64_1.0.6.0_WHQL%20-%20DUA_BIQ_WHQL.zip"
+      tar -xf "%TEMP%\NAU88L21_driver.zip" -C "%TEMP%\NAU88L21_driver_extracted"
     wait: true
-  - !cmd: {command: 'pnputil /add-driver %temp%\NAU88L21_driver_extracted\NAU88L21.inf', wait: true}
-  - !file: {path: '%temp%\NAU88L21_driver_extracted'}
-  - !file: {path: '%temp%\NAU88L21_driver.zip'}
+  - !cmd: {command: "pnputil /add-driver %TEMP%\NAU88L21_driver_extracted\NAU88L21.inf", wait: true}
+  - !file: {path: '%TEMP%\NAU88L21_driver_extracted'}
+  - !file: {path: '%TEMP%\NAU88L21_driver.zip'}
