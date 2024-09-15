@@ -1,14 +1,14 @@
 title: Main
 actions:
 - !writeStatus: {status: 'Installing Drivers'}
-- !task: {path: 'Tasks\drivers.yml'}
+- !task: {path: 'Tasks\installers\drivers.yml'}
 - !writeStatus: {status: 'Installing Steam'}
-- !task: {path: 'Tasks\steam.yml'}
+- !task: {path: 'Tasks\installers\steam.yml'}
 - !writeStatus: {status: 'Creating shortcuts'}
-- !task: {path: 'Tasks\shortcuts.yml'}
+- !task: {path: 'Tasks\tweaks\shortcuts.yml'}
 - !writeStatus: {status: 'Installing Steam Deck Tools',  option: "yesdecktools"}
-- !task: {path: 'Tasks\steamdecktools.yml',  option: "yesdecktools"}
+- !task: {path: 'Tasks\installers\steamdecktools.yml',  option: "yesdecktools"}
 - !writeStatus: {status: 'Removing Password',  option: "removepassword"}
-- !task: {path: 'Tasks\password.yml',  option: "removepassword"}
+- !task: {path: 'Tasks\tweaks\password.yml',  option: "removepassword"}
 - !writeStatus: {status: 'Setting up gaming mode boot',  option: "yesgamingmode"}
-- !task: {path: 'Tasks\gamingmode.yml',  option: "yesgamingmode"}
+- !task: {path: 'Tasks\tweaks\gamingmode.yml',  option: "yesgamingmode"}
