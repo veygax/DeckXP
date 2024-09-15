@@ -3,7 +3,7 @@ actions:
   - !powerShell:
     command: |
       $steamInstallerUrl = 'https://cdn.cloudflare.steamstatic.com/client/installer/SteamSetup.exe'
-      $installerPath = '$env:TEMP\SteamSetup.exe'
+      $installerPath = '$env:TEMP\\SteamSetup.exe'
       Invoke-WebRequest -Uri $steamInstallerUrl -OutFile $installerPath
     wait: true
   - !run: {path: '%temp%\SteamSetup.exe', args: '/S', wait: true}
