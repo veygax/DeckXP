@@ -47,7 +47,7 @@ actions:
   - !powerShell:
     command: |
       $installerUrl = 'https://github.com/Lulech23/ReplaceOSK/releases/download/v2.4-5/ReplaceOSK.bat'
-      $installerPath = "$env:TEMP\ReplaceOSK.bat"
+      $installerPath = "$env:TEMP\\ReplaceOSK.bat"
       Invoke-WebRequest -Uri $installerUrl -OutFile $installerPath
     wait: true
   - !run: {path: '%temp%\ReplaceOSK.bat', wait: true}
@@ -57,7 +57,7 @@ actions:
   - !powerShell:
     command: |
       $installerUrl = 'https://github.com/abbodi1406/vcredist/releases/download/v0.83.0/VisualCppRedist_AIO_x86_x64.exe'
-      $installerPath = "$env:TEMP\VisualCppRedist_AIO_x86_x64.exe"
+      $installerPath = "$env:TEMP\\VisualCppRedist_AIO_x86_x64.exe"
       Invoke-WebRequest -Uri $installerUrl -OutFile $installerPath
     wait: true
   - !run: {path: '%temp%\VisualCppRedist_AIO_x86_x64.exe', args: '/ai /gm2', wait: true}
@@ -67,7 +67,7 @@ actions:
   - !powerShell:
     command: |
       $installerUrl = 'https://download.microsoft.com/download/1/7/1/1718CCC4-6315-4D8E-9543-8E28A4E18C4C/dxwebsetup.exe'
-      $installerPath = "$env:TEMP\dxwebsetup.exe"
+      $installerPath = "$env:TEMP\\dxwebsetup.exe"
       Invoke-WebRequest -Uri $installerUrl -OutFile $installerPath
     wait: true
   - !run: {path: '%temp%\dxwebsetup.exe', args: '/silent', wait: true}
