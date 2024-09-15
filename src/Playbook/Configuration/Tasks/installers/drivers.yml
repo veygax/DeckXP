@@ -21,9 +21,9 @@ actions:
       Invoke-WebRequest -Uri $wifiFixUrl -OutFile $zipPath
       Expand-Archive -Path $zipPath -DestinationPath $extractPath -Force
     wait: true
-  - !run: {path: "$env:TEMP\wifi_fix_extracted\SteamDeck-Windows-WiFi-Fix-main\Setup.bat", wait: true}
-  - !file: {path: "$env:TEMP\wifi_fix.zip"}
-  - !file: {path: "$env:TEMP\wifi_fix_extracted"}
+  - !run: {path: '%temp%\wifi_fix_extracted\SteamDeck-Windows-WiFi-Fix-main\Setup.bat', wait: true}
+  - !file: {path: '%temp%\wifi_fix.zip'}
+  - !file: {path: '%temp%\wifi_fix_extracted'}
 
   - !writeStatus: {status: 'Installing Bluetooth Drivers'}
   - !powerShell:
