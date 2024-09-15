@@ -6,7 +6,7 @@ actions:
     wait: true
 
   - !writeStatus: {status: 'Disabling Hibernation'}
-  - !powerShell:
+  - !cmd:
     command: powercfg -h off
     wait: true
 
