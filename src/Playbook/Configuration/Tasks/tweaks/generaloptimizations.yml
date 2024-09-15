@@ -12,29 +12,29 @@ actions:
   - !powerShell:
     command: |
       REG LOAD HKU\Default_User C:\users\default\ntuser.dat
-      New-ItemProperty -path registry::"HKU\Default_User\Control Panel\Desktop" -Name LogPixels -Value 96 -Type DWord
-      New-ItemProperty -path registry::"HKU\Default_User\Control Panel\Desktop" -Name Win8DpiScaling -Value 1 -Type DWord
+      New-ItemProperty -Path "HKU\Default_User\Control Panel\Desktop" -Name LogPixels -Value 96 -Type DWord
+      New-ItemProperty -Path "HKU\Default_User\Control Panel\Desktop" -Name Win8DpiScaling -Value 1 -Type DWord
       REG UNLOAD HKU\Default_User
-
-      $PatternSID = 'S-1-5-21-\d+-\d+\-\d+\-\d+$'
-
+  
+      $PatternSID = 'S-1-5-21-\d+-\d+-\d+-\d+$'
+  
       $ProfileList = gp 'HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\ProfileList\*' | Where-Object {$_.PSChildName -match $PatternSID} | 
           Select  @{name="SID";expression={$_.PSChildName}}, 
                   @{name="UserHive";expression={"$($_.ProfileImagePath)\ntuser.dat"}}, 
                   @{name="Username";expression={$_.ProfileImagePath -replace '^(.*[\\\/])', ''}}
-
+  
       $LoadedHives = gci Registry::HKEY_USERS | ? {$_.PSChildname -match $PatternSID} | Select @{name="SID";expression={$_.PSChildName}}
-
+  
       $UnloadedHives = Compare-Object $ProfileList.SID $LoadedHives.SID | Select @{name="SID";expression={$_.InputObject}}, UserHive, Username
-
+  
       Foreach ($item in $ProfileList) {
           IF ($item.SID -in $UnloadedHives.SID) {
               reg load HKU\$($Item.SID) $($Item.UserHive) | Out-Null
           }
-
+  
           "{0}" -f $($item.Username) | Write-Output
-          New-ItemProperty -path registry::"HKU\$($Item.SID)\Control Panel\Desktop" -Name LogPixels -Value 96 -Type DWord -force
-          New-ItemProperty -path registry::"HKU\$($Item.SID)\Control Panel\Desktop" -Name Win8DpiScaling -Value 1 -Type DWord -force
+          New-ItemProperty -Path "HKU\$($Item.SID)\Control Panel\Desktop" -Name LogPixels -Value 96 -Type DWord -Force
+          New-ItemProperty -Path "HKU\$($Item.SID)\Control Panel\Desktop" -Name Win8DpiScaling -Value 1 -Type DWord -Force
           
           IF ($item.SID -in $UnloadedHives.SID) {
               [gc]::Collect()
@@ -44,31 +44,22 @@ actions:
     wait: true
 
   - !writeStatus: {status: 'Replacing On-Screen Keyboard'}
-  - !powerShell:
-    command: |
-      $installerUrl = 'https://github.com/Lulech23/ReplaceOSK/releases/download/v2.4-5/ReplaceOSK.bat'
-      $installerPath = "$env:TEMP\\ReplaceOSK.bat"
-      Invoke-WebRequest -Uri $installerUrl -OutFile $installerPath
+  - !cmd:
+    command: curl -L -o "%TEMP%\ReplaceOSK.bat" "https://github.com/Lulech23/ReplaceOSK/releases/download/v2.4-5/ReplaceOSK.bat"
     wait: true
   - !run: {path: '%temp%\ReplaceOSK.bat', wait: true}
   - !file: {path: '%temp%\ReplaceOSK.bat'}
 
   - !writeStatus: {status: 'Installing Visual C++'}
-  - !powerShell:
-    command: |
-      $installerUrl = 'https://github.com/abbodi1406/vcredist/releases/download/v0.83.0/VisualCppRedist_AIO_x86_x64.exe'
-      $installerPath = "$env:TEMP\\VisualCppRedist_AIO_x86_x64.exe"
-      Invoke-WebRequest -Uri $installerUrl -OutFile $installerPath
+  - !cmd:
+    command: curl -L -o "%TEMP%\VisualCppRedist_AIO_x86_x64.exe" "https://github.com/abbodi1406/vcredist/releases/download/v0.83.0/VisualCppRedist_AIO_x86_x64.exe"
     wait: true
   - !run: {path: '%temp%\VisualCppRedist_AIO_x86_x64.exe', args: '/ai /gm2', wait: true}
   - !file: {path: '%temp%\VisualCppRedist_AIO_x86_x64.exe'}
 
   - !writeStatus: {status: 'Installing DirectX'}
-  - !powerShell:
-    command: |
-      $installerUrl = 'https://download.microsoft.com/download/1/7/1/1718CCC4-6315-4D8E-9543-8E28A4E18C4C/dxwebsetup.exe'
-      $installerPath = "$env:TEMP\\dxwebsetup.exe"
-      Invoke-WebRequest -Uri $installerUrl -OutFile $installerPath
+  - !cmd:
+    command: curl -L -o "%TEMP%\dxwebsetup.exe" "https://download.microsoft.com/download/1/7/1/1718CCC4-6315-4D8E-9543-8E28A4E18C4C/dxwebsetup.exe"
     wait: true
   - !run: {path: '%temp%\dxwebsetup.exe', args: '/silent', wait: true}
   - !file: {path: '%temp%\dxwebsetup.exe'}
@@ -85,15 +76,15 @@ actions:
   - !writeStatus: {status: 'Setting Display To Landscape'}
   - !powerShell:
     command: |
-      Add-Type -TypeDefinition @"
+      Add-Type @"
       using System;
       using System.Runtime.InteropServices;
-
+  
       public class DisplayOrientationHelper
       {
           [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
           public static extern int ChangeDisplaySettings(ref DEVMODE devMode, int flags);
-
+  
           [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
           public struct DEVMODE
           {
@@ -106,7 +97,7 @@ actions:
               public ushort dmSize;
               public ushort dmDriverExtra;
               public uint dmFields;
-
+  
               public int dmPositionX;
               public int dmPositionY;
               public uint dmDisplayOrientation;
@@ -133,18 +124,18 @@ actions:
               public uint dmPanningWidth;
               public uint dmPanningHeight;
           }
-
+  
           public static void SetLandscapeOrientation()
           {
               DEVMODE dm = new DEVMODE();
               dm.dmSize = (ushort)Marshal.SizeOf(typeof(DEVMODE));
               dm.dmFields = 0x00000080; // DM_DISPLAYORIENTATION
               dm.dmDisplayOrientation = 0; // 0 = Landscape
-
+  
               ChangeDisplaySettings(ref dm, 0);
           }
       }
       "@
-
+  
       [DisplayOrientationHelper]::SetLandscapeOrientation()
     wait: true
