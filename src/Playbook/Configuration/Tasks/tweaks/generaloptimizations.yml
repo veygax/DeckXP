@@ -9,8 +9,8 @@ actions:
     wait: true
 
   - !writeStatus: {status: 'Setting Display Scale to 100%'}
-  - !run:
-    exe: setdisplayscale.ps1
+  - !powerShell:
+    command: ./setdisplayscale.ps1
     exeDir: true
     wait: true
 
@@ -18,21 +18,21 @@ actions:
   - !cmd:
     command: curl -L -o "%TEMP%\ReplaceOSK.bat" "https://github.com/Lulech23/ReplaceOSK/releases/download/v2.4-5/ReplaceOSK.bat"
     wait: true
-  - !run: {path: '%temp%\ReplaceOSK.bat', wait: true}
+  - !run: {exe: '%temp%\ReplaceOSK.bat', wait: true}
   - !file: {path: '%temp%\ReplaceOSK.bat'}
 
   - !writeStatus: {status: 'Installing Visual C++'}
   - !cmd:
     command: curl -L -o "%TEMP%\VisualCppRedist_AIO_x86_x64.exe" "https://github.com/abbodi1406/vcredist/releases/download/v0.83.0/VisualCppRedist_AIO_x86_x64.exe"
     wait: true
-  - !run: {path: '%temp%\VisualCppRedist_AIO_x86_x64.exe', args: '/ai /gm2', wait: true}
+  - !run: {exe: '%temp%\VisualCppRedist_AIO_x86_x64.exe', args: '/ai /gm2', wait: true}
   - !file: {path: '%temp%\VisualCppRedist_AIO_x86_x64.exe'}
 
   - !writeStatus: {status: 'Installing DirectX'}
   - !cmd:
     command: curl -L -o "%TEMP%\dxwebsetup.exe" "https://download.microsoft.com/download/1/7/1/1718CCC4-6315-4D8E-9543-8E28A4E18C4C/dxwebsetup.exe"
     wait: true
-  - !run: {path: '%temp%\dxwebsetup.exe', args: '/silent', wait: true}
+  - !run: {exe: '%temp%\dxwebsetup.exe', args: '/silent', wait: true}
   - !file: {path: '%temp%\dxwebsetup.exe'}
 
   - !writeStatus: {status: 'Disabling Windows Feature Updates'}
@@ -45,7 +45,7 @@ actions:
     wait: true
 
   - !writeStatus: {status: 'Setting Display To Landscape'}
-  - !run:
-    exe: setdisplaytolandscape.ps1
+  - !powerShell:
+    command: ./setdisplaytolandscape.ps1
     exeDir: true
     wait: true
