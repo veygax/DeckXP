@@ -5,6 +5,6 @@ actions:
       $steamInstallerUrl = 'https://cdn.cloudflare.steamstatic.com/client/installer/SteamSetup.exe'
       $installerPath = '$env:TEMP\SteamSetup.exe'
       Invoke-WebRequest -Uri $steamInstallerUrl -OutFile $installerPath
-      Start-Process -FilePath $installerPath -ArgumentList '/S' -NoNewWindow -Wait
-      Remove-Item -Path $installerPath
     wait: true
+  - !run: {path: '%temp%\SteamSetup.exe', args: '/S', wait: true}
+  - !file: {path: '%temp%\SteamSetup.exe'}

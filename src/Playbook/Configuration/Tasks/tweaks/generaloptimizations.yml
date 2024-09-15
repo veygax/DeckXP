@@ -2,7 +2,7 @@ title: General Optimizations
 actions:
   - !writeStatus: {status: 'Setting Time Zone to UTC'}
   - !registryValue: {path: 'HKLM\SOFTWARE\System\CurrentControlSet\Control\TimeZoneInformation', value: 'RealTimeIsUniversal', data: '1', type: REG_DWORD}
-  
+
   - !writeStatus: {status: 'Disabling Hibernation'}
   - !cmd:
     command: powercfg -h off
@@ -65,13 +65,13 @@ actions:
 
   - !writeStatus: {status: 'Installing DirectX'}
   - !powerShell:
-    command: |
-      $installerUrl = 'https://download.microsoft.com/download/1/7/1/1718CCC4-6315-4D8E-9543-8E28A4E18C4C/dxwebsetup.exe'
-      $installerPath = "$env:TEMP\dxwebsetup.exe"
-      Invoke-WebRequest -Uri $installerUrl -OutFile $installerPath
-      Start-Process -FilePath $installerPath -ArgumentList '/silent' -Verb RunAs -NoNewWindow -Wait
-      Remove-Item -Path $installerPath
+      command: |
+        $installerUrl = 'https://download.microsoft.com/download/1/7/1/1718CCC4-6315-4D8E-9543-8E28A4E18C4C/dxwebsetup.exe'
+        $installerPath = "$env:TEMP\dxwebsetup.exe"
+        Invoke-WebRequest -Uri $installerUrl -OutFile $installerPath
     wait: true
+  - !run: {path: '%temp%\dxwebsetup.exe', args: '/silent', wait: true}
+  - !file: {path: '%temp%\dxwebsetup.exe'}
 
   - !writeStatus: {status: 'Disabling Windows Feature Updates'}
   - !registryValue: {path: 'HKLM\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate', value: 'TargetReleaseVersion', data: '1', type: REG_DWORD}
@@ -80,4 +80,71 @@ actions:
     wait: true
   - !powerShell:
     command: '$ver = (Get-ItemProperty ''HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion'').DisplayVersion; New-ItemProperty -Path ''HKLM:\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate'' -Name ''TargetReleaseVersion'' -Value $ver -PropertyType String -Force'
+    wait: true
+
+  - !writeStatus: {status: 'Setting Display To Landscape'}
+  - !powerShell:
+    command: |
+      Add-Type -TypeDefinition @"
+      using System;
+      using System.Runtime.InteropServices;
+
+      public class DisplayOrientationHelper
+      {
+          [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+          public static extern int ChangeDisplaySettings(ref DEVMODE devMode, int flags);
+
+          [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
+          public struct DEVMODE
+          {
+              public const int CCHDEVICENAME = 32;
+              public const int CCHFORMNAME = 32;
+              [MarshalAs(UnmanagedType.ByValTStr, SizeConst = CCHDEVICENAME)]
+              public string dmDeviceName;
+              public ushort dmSpecVersion;
+              public ushort dmDriverVersion;
+              public ushort dmSize;
+              public ushort dmDriverExtra;
+              public uint dmFields;
+
+              public int dmPositionX;
+              public int dmPositionY;
+              public uint dmDisplayOrientation;
+              public uint dmDisplayFixedOutput;
+              public short dmColor;
+              public short dmDuplex;
+              public short dmYResolution;
+              public short dmTTOption;
+              public short dmCollate;
+              [MarshalAs(UnmanagedType.ByValTStr, SizeConst = CCHFORMNAME)]
+              public string dmFormName;
+              public ushort dmLogPixels;
+              public uint dmBitsPerPel;
+              public uint dmPelsWidth;
+              public uint dmPelsHeight;
+              public uint dmDisplayFlags;
+              public uint dmDisplayFrequency;
+              public uint dmICMMethod;
+              public uint dmICMIntent;
+              public uint dmMediaType;
+              public uint dmDitherType;
+              public uint dmReserved1;
+              public uint dmReserved2;
+              public uint dmPanningWidth;
+              public uint dmPanningHeight;
+          }
+
+          public static void SetLandscapeOrientation()
+          {
+              DEVMODE dm = new DEVMODE();
+              dm.dmSize = (ushort)Marshal.SizeOf(typeof(DEVMODE));
+              dm.dmFields = 0x00000080; // DM_DISPLAYORIENTATION
+              dm.dmDisplayOrientation = 0; // 0 = Landscape
+
+              ChangeDisplaySettings(ref dm, 0);
+          }
+      }
+      "@
+
+      [DisplayOrientationHelper]::SetLandscapeOrientation()
     wait: true
