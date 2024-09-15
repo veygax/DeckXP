@@ -3,7 +3,7 @@ actions:
   - !powerShell: 
     command: |
       $installerUrl = 'https://github.com/ayufan/steam-deck-tools/releases/download/0.7.3/SteamDeckTools-0.7.3-setup.exe'
-      $installerPath = "$env:TEMP\SteamDeckTools-0.7.3-setup.exe"
+      $installerPath = "$env:TEMP\\SteamDeckTools-0.7.3-setup.exe"
       Invoke-WebRequest -Uri $installerUrl -OutFile $installerPath
     wait: true
   - !run: {path: '%temp%\SteamDeckTools-0.7.3-setup.exe', args: '/silent', wait: true}
