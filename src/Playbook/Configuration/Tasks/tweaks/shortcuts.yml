@@ -6,9 +6,9 @@ actions:
       $desktop = [System.Environment]::GetFolderPath('Desktop')
       $shortcutPath = Join-Path $desktop 'Return to Gaming Mode.lnk'
       $iconUrl = 'https://drive.google.com/uc?export=download&id=1KdbDLKe36HtutAfzo6zzUcNEKZ1_WMYq'
-      $iconFolder = "$env:USERPROFILE\DeckXP"
+      $iconFolder = "$env:USERPROFILE\\DeckXP"
       New-Item -Path $iconFolder -ItemType Directory -Force
-      $iconPath = "$iconFolder\steam_bigpicture.ico"
+      $iconPath = "$iconFolder\\steam_bigpicture.ico"
       Invoke-WebRequest -Uri $iconUrl -OutFile $iconPath
       $wShell = New-Object -ComObject WScript.Shell
       $shortcut = $wShell.CreateShortcut($shortcutPath)
