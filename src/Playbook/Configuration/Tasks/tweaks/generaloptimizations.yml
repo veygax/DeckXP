@@ -1,10 +1,8 @@
 title: General Optimizations
 actions:
   - !writeStatus: {status: 'Setting Time Zone to UTC'}
-  - !powerShell:
-    command: reg add "HKEY_LOCAL_MACHINE\System\CurrentControlSet\Control\TimeZoneInformation" /v RealTimeIsUniversal /d 1 /t REG_DWORD /f
-    wait: true
-
+  - !registryValue: {path: 'HKLM\SOFTWARE\System\CurrentControlSet\Control\TimeZoneInformation', value: 'RealTimeIsUniversal', data: '1', type: REG_DWORD}
+  
   - !writeStatus: {status: 'Disabling Hibernation'}
   - !cmd:
     command: powercfg -h off
