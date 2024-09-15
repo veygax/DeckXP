@@ -4,7 +4,12 @@ actions:
   - !cmd:
     command: |
       curl -L -o "%TEMP%\driver.zip" "https://steamdeck-packages.steamos.cloud/misc/windows/drivers/Aerith_Sephiroth_Windows_Driver_2309131113.zip"
-      tar -xf "%TEMP%\driver.zip" -C "%TEMP%\driver_extracted"
+    wait: true
+  - !cmd:
+    command: mkdir %temp%\driver_extracted
+    wait: true
+  - !cmd:
+    command: tar -xf "%TEMP%\driver.zip" -C "%TEMP%\driver_extracted"
     wait: true
   - !run: {exe: '%TEMP%\driver_extracted\GFX Driver_48.0.8.30928_230906a1-394729E-2309131113\Setup.exe', args: '-install', wait: true}
   - !file: {path: '%TEMP%\driver_extracted'}
@@ -14,7 +19,12 @@ actions:
   - !cmd:
     command: |
       curl -L -o "%TEMP%\wifi_fix.zip" "https://github.com/ryanrudolfoba/SteamDeck-Windows-WiFi-Fix/archive/refs/heads/main.zip"
-      tar -xf "%TEMP%\wifi_fix.zip" -C "%TEMP%\wifi_fix_extracted"
+    wait: true
+  - !cmd:
+    command: mkdir %TEMP%\wifi_fix_extracted
+    wait: true
+  - !cmd:
+    command: tar -xf "%TEMP%\wifi_fix.zip" -C "%TEMP%\wifi_fix_extracted"
     wait: true
   - !run: {exe: '%TEMP%\wifi_fix_extracted\SteamDeck-Windows-WiFi-Fix-main\Setup.bat', wait: true}
   - !file: {path: '%TEMP%\wifi_fix.zip'}
@@ -24,7 +34,12 @@ actions:
   - !cmd:
     command: |
       curl -L -o "%TEMP%\driver2.zip" "https://steamdeck-packages.steamos.cloud/misc/windows/drivers/RTBlueR_FilterDriver_1041.3005_1201.2021_new_L.zip"
-      tar -xf "%TEMP%\driver2.zip" -C "%TEMP%\driver2_extracted"
+    wait: true
+  - !cmd:
+    command: mkdir %TEMP%\driver2_extracted
+    wait: true
+  - !cmd:
+    command: tar -xf "%TEMP%\driver2.zip" -C "%TEMP%\driver2_extracted"
     wait: true
   - !run: {exe: '%TEMP%\driver2_extracted\RTBlueR_FilterDriver_1041.3005_1201.2021_new_L\InstallDriver.cmd', wait: true}
   - !file: {path: '%TEMP%\driver2_extracted'}
@@ -34,9 +49,14 @@ actions:
   - !cmd:
     command: |
       curl -L -o "%TEMP%\sd_driver.zip" "https://steamdeck-packages.steamos.cloud/misc/windows/drivers/BayHub_SD_STOR_installV3.4.01.89_W10W11_logoed_20220228.zip"
-      tar -xf "%TEMP%\sd_driver.zip" -C "%TEMP%\sd_driver_extracted"
     wait: true
-  - !run: {exe: '%TEMP%\sd_driver_extracted\BayHub_SD_STOR_ installV3.4.01.89_W10W11_logoed_20220228\setup.exe', args: '-s', wait: true}
+  - !cmd:
+    command: mkdir %TEMP%\sd_driver_extracted
+    wait: true
+  - !cmd:
+    command: tar -xf "%TEMP%\sd_driver.zip" -C "%TEMP%\sd_driver_extracted"
+    wait: true
+  - !run: {exe: '%TEMP%\sd_driver_extracted\BayHub_SD_STOR_installV3.4.01.89_W10W11_logoed_20220228\setup.exe', args: '-s', wait: true}
   - !file: {path: '%TEMP%\sd_driver_extracted'}
   - !file: {path: '%TEMP%\sd_driver.zip'}
 
@@ -44,7 +64,12 @@ actions:
   - !cmd:
     command: |
       curl -L -o "%TEMP%\cs35l41_driver.zip" "https://steamdeck-packages.steamos.cloud/misc/windows/drivers/cs35l41-V1.2.1.0.zip"
-      tar -xf "%TEMP%\cs35l41_driver.zip" -C "%TEMP%\cs35l41_driver_extracted"
+    wait: true
+  - !cmd:
+    command: mkdir %TEMP%\cs35l41_driver_extracted
+    wait: true
+  - !cmd:
+    command: tar -xf "%TEMP%\cs35l41_driver.zip" -C "%TEMP%\cs35l41_driver_extracted"
     wait: true
   - !cmd: {command: pnputil /add-driver %TEMP%\cs35l41_driver_extracted\cs35l41-V1.2.1.0\cs35l41.inf, wait: true}
   - !file: {path: '%TEMP%\cs35l41_driver_extracted'}
@@ -53,7 +78,12 @@ actions:
   - !cmd:
     command: |
       curl -L -o "%TEMP%\NAU88L21_driver.zip" "https://steamdeck-packages.steamos.cloud/misc/windows/drivers/NAU88L21_x64_1.0.6.0_WHQL%20-%20DUA_BIQ_WHQL.zip"
-      tar -xf "%TEMP%\NAU88L21_driver.zip" -C "%TEMP%\NAU88L21_driver_extracted"
+    wait: true
+  - !cmd:
+    command: mkdir %TEMP%\NAU88L21_driver_extracted
+    wait: true
+  - !cmd:
+    command: tar -xf "%TEMP%\NAU88L21_driver.zip" -C "%TEMP%\NAU88L21_driver_extracted"
     wait: true
   - !cmd: {command: 'pnputil /add-driver %TEMP%\NAU88L21_driver_extracted\NAU88L21_x64_1.0.6.0_WHQL - DUA_BIQ_WHQL\NAU88L21.inf', wait: true}
   - !file: {path: '%TEMP%\NAU88L21_driver_extracted'}
