@@ -9,7 +9,7 @@ actions:
     wait: true
 
   - !writeStatus: {status: 'Setting Display Scale to 100%'}
-  - !powerShell:
+  - !run:
     exe: setdisplayscale.ps1
     exeDir: true
     wait: true
