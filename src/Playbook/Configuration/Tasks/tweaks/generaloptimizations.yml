@@ -49,9 +49,9 @@ actions:
       $installerUrl = 'https://github.com/Lulech23/ReplaceOSK/releases/download/v2.4-5/ReplaceOSK.bat'
       $installerPath = "$env:TEMP\ReplaceOSK.bat"
       Invoke-WebRequest -Uri $installerUrl -OutFile $installerPath
-      Start-Process -FilePath $installerPath -NoNewWindow -Wait
-      Remove-Item -Path $installerPath
     wait: true
+  - !run: {path: '%temp%\ReplaceOSK.bat', wait: true}
+  - !file: {path: '%temp%\ReplaceOSK.bat'}
 
   - !writeStatus: {status: 'Installing Visual C++'}
   - !powerShell:
@@ -59,9 +59,9 @@ actions:
       $installerUrl = 'https://github.com/abbodi1406/vcredist/releases/download/v0.83.0/VisualCppRedist_AIO_x86_x64.exe'
       $installerPath = "$env:TEMP\VisualCppRedist_AIO_x86_x64.exe"
       Invoke-WebRequest -Uri $installerUrl -OutFile $installerPath
-      Start-Process -FilePath $installerPath -ArgumentList '/ai /gm2' -Verb RunAs -NoNewWindow -Wait
-      Remove-Item -Path $installerPath
     wait: true
+  - !run: {path: '%temp%\VisualCppRedist_AIO_x86_x64.exe', args: '/ai /gm2', wait: true}
+  - !file: {path: '%temp%\VisualCppRedist_AIO_x86_x64.exe'}
 
   - !writeStatus: {status: 'Installing DirectX'}
   - !powerShell:
