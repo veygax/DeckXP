@@ -46,7 +46,7 @@ actions:
       curl -L -o "%TEMP%\cs35l41_driver.zip" "https://steamdeck-packages.steamos.cloud/misc/windows/drivers/cs35l41-V1.2.1.0.zip"
       tar -xf "%TEMP%\cs35l41_driver.zip" -C "%TEMP%\cs35l41_driver_extracted"
     wait: true
-  - !cmd: {command: "pnputil /add-driver %TEMP%\cs35l41_driver_extracted\cs35l41.inf", wait: true}
+  - !cmd: {command: pnputil /add-driver %TEMP%\cs35l41_driver_extracted\cs35l41.inf, wait: true}
   - !file: {path: '%TEMP%\cs35l41_driver_extracted'}
   - !file: {path: '%TEMP%\cs35l41_driver.zip'}
 
@@ -55,6 +55,6 @@ actions:
       curl -L -o "%TEMP%\NAU88L21_driver.zip" "https://steamdeck-packages.steamos.cloud/misc/windows/drivers/NAU88L21_x64_1.0.6.0_WHQL%20-%20DUA_BIQ_WHQL.zip"
       tar -xf "%TEMP%\NAU88L21_driver.zip" -C "%TEMP%\NAU88L21_driver_extracted"
     wait: true
-  - !cmd: {command: "pnputil /add-driver %TEMP%\NAU88L21_driver_extracted\NAU88L21.inf", wait: true}
+  - !cmd: {command: pnputil /add-driver %TEMP%\NAU88L21_driver_extracted\NAU88L21.inf, wait: true}
   - !file: {path: '%TEMP%\NAU88L21_driver_extracted'}
   - !file: {path: '%TEMP%\NAU88L21_driver.zip'}
