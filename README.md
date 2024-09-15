@@ -16,7 +16,7 @@ A tool that automatically sets up your Windows for Steam Deck gaming!
 
 *Install the playbook with [AME Wizard](https://download.ameliorated.io/AME%20Wizard%20Beta.zip).*
 
-**Download DeckXP from [GitHub Releases](https://github.com/veygax/DeckXP/releases/latest) or the latest nightly build from [nightly.link](https://nightly.link/veygax/DeckXP/workflows/build/main?preview).**
+**Download DeckXP from [GitHub Releases](https://github.com/veygax/DeckXP/releases/latest) or the latest nightly build from [nightly.link](https://nightly.link/veygax/DeckXP/workflows/build/main/DeckXP-nightly.zip).**
 
 *Install this with [AtlasOS](https://atlasos.net) for the best experience.*
     
