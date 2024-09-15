@@ -5,5 +5,5 @@ actions:
     command: |
       curl -L -o "%TEMP%\SteamSetup.exe" "https://cdn.cloudflare.steamstatic.com/client/installer/SteamSetup.exe"
     wait: true
-  - !run: {path: '%TEMP%\SteamSetup.exe', args: '/S', wait: true}
+  - !run: {exe: '%TEMP%\SteamSetup.exe', args: '/S', wait: true}
   - !file: {path: '%TEMP%\SteamSetup.exe'}
