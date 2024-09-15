@@ -1,0 +1,85 @@
+title: General Optimizations
+actions:
+  - !writeStatus: {status: 'Setting Time Zone to UTC'}
+  - !powerShell:
+    command: reg add "HKEY_LOCAL_MACHINE\System\CurrentControlSet\Control\TimeZoneInformation" /v RealTimeIsUniversal /d 1 /t REG_DWORD /f
+    wait: true
+
+  - !writeStatus: {status: 'Disabling Hibernation'}
+  - !powerShell:
+    command: powercfg -h off
+    wait: true
+
+  - !writeStatus: {status: 'Setting Display Scale to 100%'}
+  - !powerShell:
+    command: |
+      REG LOAD HKU\Default_User C:\users\default\ntuser.dat
+      New-ItemProperty -path registry::"HKU\Default_User\Control Panel\Desktop" -Name LogPixels -Value 96 -Type DWord
+      New-ItemProperty -path registry::"HKU\Default_User\Control Panel\Desktop" -Name Win8DpiScaling -Value 1 -Type DWord
+      REG UNLOAD HKU\Default_User
+
+      $PatternSID = 'S-1-5-21-\d+-\d+\-\d+\-\d+$'
+
+      $ProfileList = gp 'HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\ProfileList\*' | Where-Object {$_.PSChildName -match $PatternSID} | 
+          Select  @{name="SID";expression={$_.PSChildName}}, 
+                  @{name="UserHive";expression={"$($_.ProfileImagePath)\ntuser.dat"}}, 
+                  @{name="Username";expression={$_.ProfileImagePath -replace '^(.*[\\\/])', ''}}
+
+      $LoadedHives = gci Registry::HKEY_USERS | ? {$_.PSChildname -match $PatternSID} | Select @{name="SID";expression={$_.PSChildName}}
+
+      $UnloadedHives = Compare-Object $ProfileList.SID $LoadedHives.SID | Select @{name="SID";expression={$_.InputObject}}, UserHive, Username
+
+      Foreach ($item in $ProfileList) {
+          IF ($item.SID -in $UnloadedHives.SID) {
+              reg load HKU\$($Item.SID) $($Item.UserHive) | Out-Null
+          }
+
+          "{0}" -f $($item.Username) | Write-Output
+          New-ItemProperty -path registry::"HKU\$($Item.SID)\Control Panel\Desktop" -Name LogPixels -Value 96 -Type DWord -force
+          New-ItemProperty -path registry::"HKU\$($Item.SID)\Control Panel\Desktop" -Name Win8DpiScaling -Value 1 -Type DWord -force
+          
+          IF ($item.SID -in $UnloadedHives.SID) {
+              [gc]::Collect()
+              reg unload HKU\$($Item.SID) | Out-Null
+          }
+      }
+    wait: true
+
+  - !writeStatus: {status: 'Replacing On-Screen Keyboard'}
+  - !powerShell:
+    command: |
+      $installerUrl = 'https://github.com/Lulech23/ReplaceOSK/releases/download/v2.4-5/ReplaceOSK.bat'
+      $installerPath = "$env:TEMP\ReplaceOSK.bat"
+      Invoke-WebRequest -Uri $installerUrl -OutFile $installerPath
+      Start-Process -FilePath $installerPath -NoNewWindow -Wait
+      Remove-Item -Path $installerPath
+    wait: true
+
+  - !writeStatus: {status: 'Installing Visual C++'}
+  - !powerShell:
+    command: |
+      $installerUrl = 'https://github.com/abbodi1406/vcredist/releases/download/v0.83.0/VisualCppRedist_AIO_x86_x64.exe'
+      $installerPath = "$env:TEMP\VisualCppRedist_AIO_x86_x64.exe"
+      Invoke-WebRequest -Uri $installerUrl -OutFile $installerPath
+      Start-Process -FilePath $installerPath -ArgumentList '/ai /gm2' -Verb RunAs -NoNewWindow -Wait
+      Remove-Item -Path $installerPath
+    wait: true
+
+  - !writeStatus: {status: 'Installing DirectX'}
+  - !powerShell:
+    command: |
+      $installerUrl = 'https://download.microsoft.com/download/1/7/1/1718CCC4-6315-4D8E-9543-8E28A4E18C4C/dxwebsetup.exe'
+      $installerPath = "$env:TEMP\dxwebsetup.exe"
+      Invoke-WebRequest -Uri $installerUrl -OutFile $installerPath
+      Start-Process -FilePath $installerPath -ArgumentList '/silent' -Verb RunAs -NoNewWindow -Wait
+      Remove-Item -Path $installerPath
+    wait: true
+
+  - !writeStatus: {status: 'Disabling Windows Feature Updates'}
+  - !registryValue: {path: 'HKLM\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate', value: 'TargetReleaseVersion', data: '1', type: REG_DWORD}
+  - !powerShell:
+    command: 'if ((Get-CimInstance -Class Win32_OperatingSystem).Caption -match 11) {$a = ''Windows 11''} else {$a = ''Windows 10''}; New-ItemProperty -Path ''HKLM:\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate'' -Name ''ProductVersion'' -Value $a -PropertyType String -Force'
+    wait: true
+  - !powerShell:
+    command: '$ver = (Get-ItemProperty ''HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion'').DisplayVersion; New-ItemProperty -Path ''HKLM:\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate'' -Name ''TargetReleaseVersion'' -Value $ver -PropertyType String -Force'
+    wait: true

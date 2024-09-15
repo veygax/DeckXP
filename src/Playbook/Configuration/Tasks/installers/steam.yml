@@ -1,9 +1,10 @@
 title: Install Steam
 actions:
-- !powershell:
-  command: |
-    $steamInstallerUrl = 'https://cdn.cloudflare.steamstatic.com/client/installer/SteamSetup.exe'
-    $installerPath = '$env:TEMP\SteamSetup.exe'
-    Invoke-WebRequest -Uri $steamInstallerUrl -OutFile $installerPath
-    Start-Process -FilePath $installerPath -ArgumentList '/S' -NoNewWindow -Wait
-    Remove-Item -Path $installerPath
+  - !powerShell:
+    command: |
+      $steamInstallerUrl = 'https://cdn.cloudflare.steamstatic.com/client/installer/SteamSetup.exe'
+      $installerPath = '$env:TEMP\SteamSetup.exe'
+      Invoke-WebRequest -Uri $steamInstallerUrl -OutFile $installerPath
+      Start-Process -FilePath $installerPath -ArgumentList '/S' -NoNewWindow -Wait
+      Remove-Item -Path $installerPath
+    wait: true
