@@ -65,10 +65,10 @@ actions:
 
   - !writeStatus: {status: 'Installing DirectX'}
   - !powerShell:
-      command: |
-        $installerUrl = 'https://download.microsoft.com/download/1/7/1/1718CCC4-6315-4D8E-9543-8E28A4E18C4C/dxwebsetup.exe'
-        $installerPath = "$env:TEMP\dxwebsetup.exe"
-        Invoke-WebRequest -Uri $installerUrl -OutFile $installerPath
+    command: |
+      $installerUrl = 'https://download.microsoft.com/download/1/7/1/1718CCC4-6315-4D8E-9543-8E28A4E18C4C/dxwebsetup.exe'
+      $installerPath = "$env:TEMP\dxwebsetup.exe"
+      Invoke-WebRequest -Uri $installerUrl -OutFile $installerPath
     wait: true
   - !run: {path: '%temp%\dxwebsetup.exe', args: '/silent', wait: true}
   - !file: {path: '%temp%\dxwebsetup.exe'}
