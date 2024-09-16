@@ -10,7 +10,7 @@ actions:
   - !task: {path: 'Tasks\installers\steamdecktools.yml',  option: "yesdecktools"}
   - !writeStatus: {status: 'Removing Password',  option: "removepassword"}
   - !task: {path: 'Tasks\tweaks\password.yml',  option: "removepassword"}
-  - !writeStatus: {status: 'Setting up gaming mode boot',  option: "yesgamingmode"}
-  - !task: {path: 'Tasks\tweaks\gamingmode.yml',  option: "yesgamingmode"}
+  #- !writeStatus: {status: 'Setting up gaming mode boot',  option: "yesgamingmode"}
+  #- !task: {path: 'Tasks\tweaks\gamingmode.yml',  option: "yesgamingmode"}
   - !writeStatus: {status: 'Performing General Optimizations'}
   - !task: {path: 'Tasks\tweaks\generaloptimizations.yml'}
