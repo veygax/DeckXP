@@ -11,25 +11,13 @@ actions:
   - !cmd:
     command: tar -xf "%TEMP%\driver.zip" -C "%TEMP%\driver_extracted"
     wait: true
-  - !run: {exe: '%TEMP%\driver_extracted\GFX Driver_48.0.8.30928_230906a1-394729E-2309131113\Setup.exe', args: '-install', wait: true}
+  - !run: {exe: '%TEMP%\driver_extracted\GFX Driver_48.0.8.30928_230906a1-394729E- 2309131113\Setup.exe', args: '-install', wait: true}
   - !file: {path: '%TEMP%\driver_extracted'}
   - !file: {path: '%TEMP%\driver.zip'}
 
   - !writeStatus: {status: 'Installing WiFi Fix'}
-  - !cmd:
-    command: |
-      curl -L -o "%TEMP%\wifi_fix.zip" "https://github.com/ryanrudolfoba/SteamDeck-Windows-WiFi-Fix/archive/refs/heads/main.zip"
-    wait: true
-  - !cmd:
-    command: mkdir %TEMP%\wifi_fix_extracted
-    wait: true
-  - !cmd:
-    command: tar -xf "%TEMP%\wifi_fix.zip" -C "%TEMP%\wifi_fix_extracted"
-    wait: true
-  - !run: {exe: '%TEMP%\wifi_fix_extracted\SteamDeck-Windows-WiFi-Fix-main\Setup.bat', wait: true}
-  - !file: {path: '%TEMP%\wifi_fix.zip'}
-  - !file: {path: '%TEMP%\wifi_fix_extracted'}
-
+  - !run: {exe: 'SteamDeck-Windows-WiFi-Fix-main\Setup.bat', exeDir: true, wait: true}
+  
   - !writeStatus: {status: 'Installing Bluetooth Drivers'}
   - !cmd:
     command: |
@@ -56,7 +44,7 @@ actions:
   - !cmd:
     command: tar -xf "%TEMP%\sd_driver.zip" -C "%TEMP%\sd_driver_extracted"
     wait: true
-  - !run: {exe: '%TEMP%\sd_driver_extracted\BayHub_SD_STOR_installV3.4.01.89_W10W11_logoed_20220228\setup.exe', args: '-s', wait: true}
+  - !run: {exe: '%TEMP%\sd_driver_extracted\BayHub_SD_STOR_ installV3.4.01.89_W10W11_logoed_20220228\setup.exe', args: '-s', wait: true}
   - !file: {path: '%TEMP%\sd_driver_extracted'}
   - !file: {path: '%TEMP%\sd_driver.zip'}
 
