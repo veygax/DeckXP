@@ -3,8 +3,8 @@ actions:
   - !writeStatus: {status: 'Installing Drivers', option: "steamdecklcd"}
   - !task: {path: 'Tasks\installers\LCD\drivers.yml', option: "steamdecklcd"}
 
-  #- !writeStatus: {status: 'Installing Drivers', option: "steamdeckoled"}
-  #- !task: {path: 'Tasks\installers\OLED\drivers.yml', option: "steamdeckoled"}
+  - !writeStatus: {status: 'Installing Drivers', option: "steamdeckoled"}
+  - !task: {path: 'Tasks\installers\OLED\drivers.yml', option: "steamdeckoled"}
 
   - !writeStatus: {status: 'Installing Steam'}
   - !task: {path: 'Tasks\installers\steam.yml'}
