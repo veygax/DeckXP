@@ -3,54 +3,54 @@ actions:
   - !writeStatus: {status: 'Installing APU Drivers'}
   - !cmd:
     command: |
-      curl -L -o "%TEMP%\driver.zip" "https://steamdeck-packages.steamos.cloud/misc/windows/drivers/GFX_Driver_48.0.8.40630.zip"
+      curl -L -o "%TEMP%\apu_driver.zip" "https://steamdeck-packages.steamos.cloud/misc/windows/drivers/GFX_Driver_48.0.8.40630.zip"
     wait: true
   - !cmd:
     command: |
-      if exist %temp%\driver_extracted rmdir /S /Q %temp%\driver_extracted
-      mkdir %temp%\driver_extracted
+      if exist %temp%\apu_driver_extracted rmdir /S /Q %temp%\apu_driver_extracted
+      mkdir %temp%\apu_driver_extracted
     wait: true
   - !cmd:
-    command: tar -xf "%TEMP%\driver.zip" -C "%TEMP%\driver_extracted"
+    command: tar -xf "%TEMP%\apu_driver.zip" -C "%TEMP%\apu_driver_extracted"
     wait: true
-  - !run: {exe: '%TEMP%\driver_extracted\GFX_DriverGFX Driver_48.0.8.40630\Setup.exe', args: '-install', wait: true}
-  - !file: {path: '%TEMP%\driver_extracted'}
-  - !file: {path: '%TEMP%\driver.zip'}
+  - !run: {exe: '%TEMP%\apu_driver_extracted\GFX_DriverGFX Driver_48.0.8.40630\Setup.exe', args: '-install', wait: true}
+  - !file: {path: '%TEMP%\apu_driver_extracted'}
+  - !file: {path: '%TEMP%\apu_driver.zip'}
 
   - !writeStatus: {status: 'Installing WiFi Drivers'}
   - !cmd:
     command: |
-      curl -L -o "%TEMP%\wifi_drivers.zip" "https://steamdeck-packages.steamos.cloud/misc/windows/drivers/FC66E-WIN_WiFi_driver.zip"
+      curl -L -o "%TEMP%\wifi_driver.zip" "https://steamdeck-packages.steamos.cloud/misc/windows/drivers/FC66E-WIN_WiFi_driver.zip"
     wait: true
   - !cmd:
     command: |
-      if exist %temp%\wifi_drivers_extracted rmdir /S /Q %temp%\wifi_drivers_extracted
-      mkdir %temp%\wifi_drivers_extracted
+      if exist %temp%\wifi_driver_extracted rmdir /S /Q %temp%\wifi_driver_extracted
+      mkdir %temp%\wifi_driver_extracted
     wait: true
   - !cmd:
-    command: tar -xf "%TEMP%\wifi_drivers.zip" -C "%TEMP%\wifi_drivers_extracted"
+    command: tar -xf "%TEMP%\wifi_driver.zip" -C "%TEMP%\wifi_driver_extracted"
     wait: true
-  - !cmd: {command: 'pnputil /add-driver %TEMP%\wifi_drivers_extracted\FC66E-WIN_WiFi_driver\win11\Signed_1152921505697186177\drivers\be9ac925-f76a-4aab-bd0d-59f4e94c5fea\qcwlan64.inf', option: "windows11", wait: true}
-  - !cmd: {command: 'pnputil /add-driver %TEMP%\wifi_drivers_extracted\FC66E-WIN_WiFi_driver\win10\Win10_1.0.123.1610_for_Quectel_206x\drivers\x64\qcwlan64.inf', option: "windows10", wait: true}
-  - !file: {path: '%TEMP%\wifi_drivers_extracted'}
-  - !file: {path: '%TEMP%\wifi_drivers.zip'}
+  - !cmd: {command: 'pnputil /add-driver %TEMP%\wifi_driver_extracted\FC66E-WIN_WiFi_driver\win11\Signed_1152921505697186177\drivers\be9ac925-f76a-4aab-bd0d-59f4e94c5fea\qcwlan64.inf', option: "windows11", wait: true}
+  - !cmd: {command: 'pnputil /add-driver %TEMP%\wifi_driver_extracted\FC66E-WIN_WiFi_driver\win10\Win10_1.0.123.1610_for_Quectel_206x\drivers\x64\qcwlan64.inf', option: "windows10", wait: true}
+  - !file: {path: '%TEMP%\wifi_driver_extracted'}
+  - !file: {path: '%TEMP%\wifi_driver.zip'}
   
   - !writeStatus: {status: 'Installing Bluetooth Drivers'}
   - !cmd:
     command: |
-      curl -L -o "%TEMP%\driver2.zip" "https://steamdeck-packages.steamos.cloud/misc/windows/drivers/FC66E-B_WIN_Bluetooth_driver.zip"
+      curl -L -o "%TEMP%\bluetooth_driver.zip" "https://steamdeck-packages.steamos.cloud/misc/windows/drivers/FC66E-B_WIN_Bluetooth_driver.zip"
     wait: true
   - !cmd:
     command: |
-      if exist %temp%\driver2_extracted rmdir /S /Q %temp%\driver2_extracted
-      mkdir %temp%\driver2_extracted
+      if exist %temp%\bluetooth_driver_extracted rmdir /S /Q %temp%\bluetooth_driver_extracted
+      mkdir %temp%\bluetooth_driver_extracted
     wait: true
   - !cmd:
-    command: tar -xf "%TEMP%\driver2.zip" -C "%TEMP%\driver2_extracted"
+    command: tar -xf "%TEMP%\bluetooth_driver.zip" -C "%TEMP%\bluetooth_driver_extracted"
     wait: true
-  - !cmd: {command: 'pnputil /add-driver %TEMP%\driver2_extracted\FC66E-B_WIN_Bluetooth_driver\BT\x64\qcbtuart.inf', wait: true}
-  - !file: {path: '%TEMP%\driver2_extracted'}
-  - !file: {path: '%TEMP%\driver2.zip'}
+  - !cmd: {command: 'pnputil /add-driver %TEMP%\bluetooth_driver_extracted\FC66E-B_WIN_Bluetooth_driver\BT\x64\qcbtuart.inf', wait: true}
+  - !file: {path: '%TEMP%\bluetooth_driver_extracted'}
+  - !file: {path: '%TEMP%\bluetooth_driver.zip'}
 
   - !writeStatus: {status: 'Installing SD Card Drivers'}
   - !cmd:

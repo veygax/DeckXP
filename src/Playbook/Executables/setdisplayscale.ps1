@@ -8,14 +8,14 @@ REG UNLOAD HKU\Default_User
 $PatternSID = 'S-1-5-21-\d+-\d+-\d+-\d+$'
 
 # Get the list of user profiles
-$ProfileList = gp 'HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\ProfileList\*' | 
+$ProfileList = Get-ItemProperty 'HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\ProfileList\*' | 
     Where-Object { $_.PSChildName -match $PatternSID } | 
     Select-Object @{Name="SID"; Expression={$_.PSChildName}}, 
                    @{Name="UserHive"; Expression={"$($_.ProfileImagePath)\ntuser.dat"}}, 
                    @{Name="Username"; Expression={$_.ProfileImagePath -replace '^(.*[\\\/])', ''}}
 
 # Get the list of currently loaded user hives
-$LoadedHives = gci Registry::HKEY_USERS | 
+$LoadedHives = Get-ChildItem Registry::HKEY_USERS | 
     Where-Object { $_.PSChildName -match $PatternSID } | 
     Select-Object @{Name="SID"; Expression={$_.PSChildName}}
 

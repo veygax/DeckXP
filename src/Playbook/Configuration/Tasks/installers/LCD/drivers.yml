@@ -23,19 +23,19 @@ actions:
   - !writeStatus: {status: 'Installing Bluetooth Drivers'}
   - !cmd:
     command: |
-      curl -L -o "%TEMP%\driver2.zip" "https://steamdeck-packages.steamos.cloud/misc/windows/drivers/RTBlueR_FilterDriver_1041.3005_1201.2021_new_L.zip"
+      curl -L -o "%TEMP%\bluetooth_driver.zip" "https://steamdeck-packages.steamos.cloud/misc/windows/drivers/RTBlueR_FilterDriver_1041.3005_1201.2021_new_L.zip"
     wait: true
   - !cmd:
     command: |
-      if exist %temp%\driver2_extracted rmdir /S /Q %temp%\driver2_extracted
-      mkdir %temp%\driver2_extracted
+      if exist %temp%\bluetooth_driver_extracted rmdir /S /Q %temp%\bluetooth_driver_extracted
+      mkdir %temp%\bluetooth_driver_extracted
     wait: true
   - !cmd:
-    command: tar -xf "%TEMP%\driver2.zip" -C "%TEMP%\driver2_extracted"
+    command: tar -xf "%TEMP%\bluetooth_driver.zip" -C "%TEMP%\bluetooth_driver_extracted"
     wait: true
-  - !run: {exe: '%TEMP%\driver2_extracted\RTBlueR_FilterDriver_1041.3005_1201.2021_new_L\InstallDriver.cmd', wait: true}
-  - !file: {path: '%TEMP%\driver2_extracted'}
-  - !file: {path: '%TEMP%\driver2.zip'}
+  - !run: {exe: '%TEMP%\bluetooth_driver_extracted\RTBlueR_FilterDriver_1041.3005_1201.2021_new_L\InstallDriver.cmd', wait: true}
+  - !file: {path: '%TEMP%\bluetooth_driver_extracted'}
+  - !file: {path: '%TEMP%\bluetooth_driver.zip'}
 
   - !writeStatus: {status: 'Installing SD Card Drivers'}
   - !cmd:
