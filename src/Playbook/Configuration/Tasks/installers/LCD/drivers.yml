@@ -3,19 +3,21 @@ actions:
   - !writeStatus: {status: 'Installing APU Drivers'}
   - !cmd:
     command: |
-      curl -L -o "%TEMP%\driver.zip" "https://steamdeck-packages.steamos.cloud/misc/windows/drivers/Aerith_Sephiroth_Windows_Driver_2309131113.zip"
+      curl -L -o "%TEMP%\apu_driver.zip" "https://steamdeck-packages.steamos.cloud/misc/windows/drivers/Aerith_Sephiroth_Windows_Driver_2309131113.zip"
     wait: true
   - !cmd:
     command: |
-      if exist %temp%\driver_extracted rmdir /S /Q %temp%\driver_extracted
-      mkdir %temp%\driver_extracted
+      if exist %temp%\apu_driver_extracted rmdir /S /Q %temp%\apu_driver_extracted
+      mkdir %temp%\apu_driver_extracted
     wait: true
+    runas: currentUserElevated
   - !cmd:
-    command: tar -xf "%TEMP%\driver.zip" -C "%TEMP%\driver_extracted"
+    command: tar -xf "%TEMP%\apu_driver.zip" -C "%TEMP%\apu_driver_extracted"
     wait: true
-  - !run: {exe: '%TEMP%\driver_extracted\GFX Driver_48.0.8.30928_230906a1-394729E- 2309131113\Setup.exe', args: '-install', wait: true}
-  - !file: {path: '%TEMP%\driver_extracted'}
-  - !file: {path: '%TEMP%\driver.zip'}
+    runas: currentUserElevated
+  - !run: {exe: '%TEMP%\apu_driver_extracted\GFX Driver_48.0.8.30928_230906a1-394729E- 2309131113\Setup.exe', args: '-install', wait: true}
+  - !file: {path: '%TEMP%\apu_driver_extracted'}
+  - !file: {path: '%TEMP%\apu_driver.zip'}
 
   - !writeStatus: {status: 'Installing WiFi Fix'}
   - !run: {exe: 'SteamDeck-Windows-WiFi-Fix-main\Setup.bat', exeDir: true, wait: true}
@@ -30,9 +32,11 @@ actions:
       if exist %temp%\bluetooth_driver_extracted rmdir /S /Q %temp%\bluetooth_driver_extracted
       mkdir %temp%\bluetooth_driver_extracted
     wait: true
+    runas: currentUserElevated
   - !cmd:
     command: tar -xf "%TEMP%\bluetooth_driver.zip" -C "%TEMP%\bluetooth_driver_extracted"
     wait: true
+    runas: currentUserElevated
   - !run: {exe: '%TEMP%\bluetooth_driver_extracted\RTBlueR_FilterDriver_1041.3005_1201.2021_new_L\InstallDriver.cmd', wait: true}
   - !file: {path: '%TEMP%\bluetooth_driver_extracted'}
   - !file: {path: '%TEMP%\bluetooth_driver.zip'}
@@ -47,9 +51,11 @@ actions:
       if exist %temp%\sd_driver_extracted rmdir /S /Q %temp%\sd_driver_extracted
       mkdir %temp%\sd_driver_extracted
     wait: true
+    runas: currentUserElevated
   - !cmd:
     command: tar -xf "%TEMP%\sd_driver.zip" -C "%TEMP%\sd_driver_extracted"
     wait: true
+    runas: currentUserElevated
   - !run: {exe: '%TEMP%\sd_driver_extracted\BayHub_SD_STOR_ installV3.4.01.89_W10W11_logoed_20220228\setup.exe', args: '-s', wait: true}
   - !file: {path: '%TEMP%\sd_driver_extracted'}
   - !file: {path: '%TEMP%\sd_driver.zip'}
@@ -64,9 +70,11 @@ actions:
       if exist %temp%\cs35l41_driver_extracted rmdir /S /Q %temp%\cs35l41_driver_extracted
       mkdir %temp%\cs35l41_driver_extracted
     wait: true
+    runas: currentUserElevated
   - !cmd:
     command: tar -xf "%TEMP%\cs35l41_driver.zip" -C "%TEMP%\cs35l41_driver_extracted"
     wait: true
+    runas: currentUserElevated
   - !cmd: {command: pnputil /add-driver %TEMP%\cs35l41_driver_extracted\cs35l41-V1.2.1.0\cs35l41.inf, wait: true}
   - !file: {path: '%TEMP%\cs35l41_driver_extracted'}
   - !file: {path: '%TEMP%\cs35l41_driver.zip'}
@@ -80,9 +88,11 @@ actions:
       if exist %temp%\NAU88L21_driver_extracted rmdir /S /Q %temp%\NAU88L21_driver_extracted
       mkdir %temp%\NAU88L21_driver_extracted
     wait: true
+    runas: currentUserElevated
   - !cmd:
     command: tar -xf "%TEMP%\NAU88L21_driver.zip" -C "%TEMP%\NAU88L21_driver_extracted"
     wait: true
+    runas: currentUserElevated
   - !cmd: {command: 'pnputil /add-driver %TEMP%\NAU88L21_driver_extracted\NAU88L21_x64_1.0.6.0_WHQL - DUA_BIQ_WHQL\NAU88L21.inf', wait: true}
   - !file: {path: '%TEMP%\NAU88L21_driver_extracted'}
   - !file: {path: '%TEMP%\NAU88L21_driver.zip'}

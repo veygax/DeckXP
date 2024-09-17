@@ -9,8 +9,6 @@ set "iconUrl=https://drive.google.com/uc?export=download&id=1KdbDLKe36HtutAfzo6z
 set "iconFolder=%USERPROFILE%\DeckXP"
 set "iconPath=%iconFolder%\steam_bigpicture.ico"
 
-mkdir "%iconFolder%"
-
 powershell -Command "Invoke-WebRequest -Uri '%iconUrl%' -OutFile '%iconPath%'"
 
 powershell -Command ^

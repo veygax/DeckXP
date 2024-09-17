@@ -1,7 +1,7 @@
 title: Main
 actions:
   - !writeStatus: {status: 'Creating DeckXP Folder'}
-  - !powerShell: {command: '.\createdeckxpfolder.ps1', exeDir: true, wait: true}
+  - !powerShell: {command: '.\createdeckxpfolder.ps1', exeDir: true, runas: currentUserElevated, wait: true}
 
   - !writeStatus: {status: 'Installing Drivers', option: "steamdecklcd"}
   - !task: {path: 'Tasks\installers\LCD\drivers.yml', option: "steamdecklcd"}
