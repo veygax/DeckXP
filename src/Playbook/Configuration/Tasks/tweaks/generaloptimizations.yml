@@ -10,7 +10,7 @@ actions:
 
   - !writeStatus: {status: 'Setting Display Scale to 100%'}
   - !powerShell:
-    command: ./setdisplayscale.ps1
+    command: .\setdisplayscale.ps1
     exeDir: true
     wait: true
 
@@ -46,6 +46,6 @@ actions:
 
   - !writeStatus: {status: 'Setting Display To Landscape'}
   - !powerShell:
-    command: ./setdisplaytolandscape.ps1
+    command: .\setdisplaytolandscape.ps1
     exeDir: true
     wait: true
