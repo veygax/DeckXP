@@ -30,15 +30,15 @@ actions:
   - !cmd:
     command: tar -xf "%TEMP%\wifi_drivers.zip" -C "%TEMP%\wifi_drivers_extracted"
     wait: true
-  - !cmd: {command: 'pnputil /add-driver %TEMP%\win11\Signed_1152921505697186177\drivers\be9ac925-f76a-4aab-bd0d-59f4e94c5fea\qcwlan64.inf', option: "windows11", wait: true}
-  - !cmd: {command: 'pnputil /add-driver %TEMP%\win10\Win10_1.0.123.1610_for_Quectel_206x\drivers\x64\qcwlan64.inf', option: "windows10", wait: true}
+  - !cmd: {command: 'pnputil /add-driver %TEMP%\wifi_drivers_extracted\FC66E-WIN_WiFi_driver\win11\Signed_1152921505697186177\drivers\be9ac925-f76a-4aab-bd0d-59f4e94c5fea\qcwlan64.inf', option: "windows11", wait: true}
+  - !cmd: {command: 'pnputil /add-driver %TEMP%\wifi_drivers_extracted\FC66E-WIN_WiFi_driver\win10\Win10_1.0.123.1610_for_Quectel_206x\drivers\x64\qcwlan64.inf', option: "windows10", wait: true}
   - !file: {path: '%TEMP%\wifi_drivers_extracted'}
   - !file: {path: '%TEMP%\wifi_drivers.zip'}
   
   - !writeStatus: {status: 'Installing Bluetooth Drivers'}
   - !cmd:
     command: |
-      curl -L -o "%TEMP%\driver2.zip" "https://steamdeck-packages.steamos.cloud/misc/windows/drivers/RTBlueR_FilterDriver_1041.3005_1201.2021_new_L.zip"
+      curl -L -o "%TEMP%\driver2.zip" "https://steamdeck-packages.steamos.cloud/misc/windows/drivers/FC66E-B_WIN_Bluetooth_driver.zip"
     wait: true
   - !cmd:
     command: |
@@ -48,7 +48,7 @@ actions:
   - !cmd:
     command: tar -xf "%TEMP%\driver2.zip" -C "%TEMP%\driver2_extracted"
     wait: true
-  - !run: {exe: '%TEMP%\driver2_extracted\RTBlueR_FilterDriver_1041.3005_1201.2021_new_L\InstallDriver.cmd', wait: true}
+  - !cmd: {command: 'pnputil /add-driver %TEMP%\driver2_extracted\FC66E-B_WIN_Bluetooth_driver\BT\x64\qcbtuart.inf', wait: true}
   - !file: {path: '%TEMP%\driver2_extracted'}
   - !file: {path: '%TEMP%\driver2.zip'}
 
@@ -72,7 +72,7 @@ actions:
   - !writeStatus: {status: 'Installing Audio Drivers'}
   - !cmd:
     command: |
-      curl -L -o "%TEMP%\cs35l41_driver.zip" "https://steamdeck-packages.steamos.cloud/misc/windows/drivers/cs35l41-V1.2.1.0.zip"
+      curl -L -o "%TEMP%\cs35l41_driver.zip" "https://steamdeck-packages.steamos.cloud/misc/windows/drivers/Audio1_cs35l41-V1.2.1.0.zip"
     wait: true
   - !cmd:
     command: |
@@ -88,7 +88,7 @@ actions:
 
   - !cmd:
     command: |
-      curl -L -o "%TEMP%\NAU88L21_driver.zip" "https://steamdeck-packages.steamos.cloud/misc/windows/drivers/NAU88L21_x64_1.0.6.0_WHQL%20-%20DUA_BIQ_WHQL.zip"
+      curl -L -o "%TEMP%\NAU88L21_driver.zip" "https://steamdeck-packages.steamos.cloud/misc/windows/drivers/Audio2_NAU88L21_x64_1.0.9.1_WHQL.zip"
     wait: true
   - !cmd:
     command: |
@@ -98,6 +98,22 @@ actions:
   - !cmd:
     command: tar -xf "%TEMP%\NAU88L21_driver.zip" -C "%TEMP%\NAU88L21_driver_extracted"
     wait: true
-  - !cmd: {command: 'pnputil /add-driver %TEMP%\NAU88L21_driver_extracted\NAU88L21_x64_1.0.6.0_WHQL - DUA_BIQ_WHQL\NAU88L21.inf', wait: true}
+  - !cmd: {command: 'pnputil /add-driver %TEMP%\NAU88L21_driver_extracted\NAU88L21_x64_1.0.9.1_WHQL\NAU88L21.inf', wait: true}
   - !file: {path: '%TEMP%\NAU88L21_driver_extracted'}
   - !file: {path: '%TEMP%\NAU88L21_driver.zip'}
+
+  - !cmd:
+    command: |
+      curl -L -o "%TEMP%\amdampdriver_driver.zip" "https://steamdeck-packages.steamos.cloud/misc/windows/drivers/amdampdriver.zip"
+    wait: true
+  - !cmd:
+    command: |
+      if exist %temp%\amdampdriver_driver_extracted rmdir /S /Q %temp%\amdampdriver_driver_extracted
+      mkdir %temp%\amdampdriver_driver_extracted
+    wait: true
+  - !cmd:
+    command: tar -xf "%TEMP%\amdampdriver_driver.zip" -C "%TEMP%\amdampdriver_driver_extracted"
+    wait: true
+  - !cmd: {command: 'pnputil /add-driver %TEMP%\amdampdriver_driver_extracted\amdampdriver\amdi2scodec.inf', wait: true}
+  - !file: {path: '%TEMP%\amdampdriver_driver_extracted'}
+  - !file: {path: '%TEMP%\amdampdriver_driver.zip'}
