@@ -18,6 +18,9 @@ actions:
   - !writeStatus: {status: 'Installing Steam Deck Tools',  option: "yesdecktools"}
   - !task: {path: 'Tasks\installers\steamdecktools.yml',  option: "yesdecktools"}
 
+  - !writeStatus: {status: 'Installing Handheld Companion',  option: "yeshandheldcompanion"}
+  - !task: {path: 'Tasks\installers\handheldcompanion.yml',  option: "yeshandheldcompanion"}
+
   - !writeStatus: {status: 'Removing Password',  option: "removepassword"}
   - !task: {path: 'Tasks\tweaks\password.yml',  option: "removepassword"}
 

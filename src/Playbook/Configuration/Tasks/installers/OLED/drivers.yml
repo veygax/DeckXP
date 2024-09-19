@@ -1,133 +1,41 @@
 title: Install Drivers
 actions:
   - !writeStatus: {status: 'Installing APU Drivers'}
-  - !cmd:
-    command: |
-      curl -L -o "%TEMP%\apu_driver.zip" "https://steamdeck-packages.steamos.cloud/misc/windows/drivers/GFX_Driver_48.0.8.40630.zip"
+  - !powerShell:
+    command: .\installdrivers.ps1 -Driver "APU" -Model "OLED"
+    exeDir: true
     wait: true
-  - !cmd:
-    command: |
-      if exist %temp%\apu_driver_extracted rmdir /S /Q %temp%\apu_driver_extracted
-      mkdir %temp%\apu_driver_extracted
-    wait: true
-    runas: currentUserElevated
-  - !cmd:
-    command: tar -xf "%TEMP%\apu_driver.zip" -C "%TEMP%\apu_driver_extracted"
-    wait: true
-    runas: currentUserElevated
-  - !run: {exe: '%TEMP%\apu_driver_extracted\GFX_DriverGFX Driver_48.0.8.40630\Setup.exe', args: '-install', wait: true}
-  - !file: {path: '%TEMP%\apu_driver_extracted'}
-  - !file: {path: '%TEMP%\apu_driver.zip'}
 
   - !writeStatus: {status: 'Installing WiFi Drivers'}
-  - !cmd:
-    command: |
-      curl -L -o "%TEMP%\wifi_driver.zip" "https://steamdeck-packages.steamos.cloud/misc/windows/drivers/FC66E-WIN_WiFi_driver.zip"
+  - !powerShell:
+    command: .\installdrivers.ps1 -Driver "WiFi" -Model "OLED"
+    exeDir: true
     wait: true
-  - !cmd:
-    command: |
-      if exist %temp%\wifi_driver_extracted rmdir /S /Q %temp%\wifi_driver_extracted
-      mkdir %temp%\wifi_driver_extracted
-    wait: true
-    runas: currentUserElevated
-  - !cmd:
-    command: tar -xf "%TEMP%\wifi_driver.zip" -C "%TEMP%\wifi_driver_extracted"
-    wait: true
-    runas: currentUserElevated
-  - !cmd: {command: 'pnputil /add-driver %TEMP%\wifi_driver_extracted\FC66E-WIN_WiFi_driver\win11\Signed_1152921505697186177\drivers\be9ac925-f76a-4aab-bd0d-59f4e94c5fea\qcwlan64.inf', option: "windows11", wait: true}
-  - !cmd: {command: 'pnputil /add-driver %TEMP%\wifi_driver_extracted\FC66E-WIN_WiFi_driver\win10\Win10_1.0.123.1610_for_Quectel_206x\drivers\x64\qcwlan64.inf', option: "windows10", wait: true}
-  - !file: {path: '%TEMP%\wifi_driver_extracted'}
-  - !file: {path: '%TEMP%\wifi_driver.zip'}
   
   - !writeStatus: {status: 'Installing Bluetooth Drivers'}
-  - !cmd:
-    command: |
-      curl -L -o "%TEMP%\bluetooth_driver.zip" "https://steamdeck-packages.steamos.cloud/misc/windows/drivers/FC66E-B_WIN_Bluetooth_driver.zip"
+  - !powerShell:
+    command: .\installdrivers.ps1 -Driver "Bluetooth" -Model "OLED"
+    exeDir: true
     wait: true
-  - !cmd:
-    command: |
-      if exist %temp%\bluetooth_driver_extracted rmdir /S /Q %temp%\bluetooth_driver_extracted
-      mkdir %temp%\bluetooth_driver_extracted
-    wait: true
-    runas: currentUserElevated
-  - !cmd:
-    command: tar -xf "%TEMP%\bluetooth_driver.zip" -C "%TEMP%\bluetooth_driver_extracted"
-    wait: true
-    runas: currentUserElevated
-  - !cmd: {command: 'pnputil /add-driver %TEMP%\bluetooth_driver_extracted\FC66E-B_WIN_Bluetooth_driver\BT\x64\qcbtuart.inf', wait: true}
-  - !file: {path: '%TEMP%\bluetooth_driver_extracted'}
-  - !file: {path: '%TEMP%\bluetooth_driver.zip'}
 
   - !writeStatus: {status: 'Installing SD Card Drivers'}
-  - !cmd:
-    command: |
-      curl -L -o "%TEMP%\sd_driver.zip" "https://steamdeck-packages.steamos.cloud/misc/windows/drivers/BayHub_SD_STOR_installV3.4.01.89_W10W11_logoed_20220228.zip"
+  - !powerShell:
+    command: .\installdrivers.ps1 -Driver "SDCard" -Model "OLED"
+    exeDir: true
     wait: true
-  - !cmd:
-    command: |
-      if exist %temp%\sd_driver_extracted rmdir /S /Q %temp%\sd_driver_extracted
-      mkdir %temp%\sd_driver_extracted
-    wait: true
-    runas: currentUserElevated
-  - !cmd:
-    command: tar -xf "%TEMP%\sd_driver.zip" -C "%TEMP%\sd_driver_extracted"
-    wait: true
-    runas: currentUserElevated
-  - !run: {exe: '%TEMP%\sd_driver_extracted\BayHub_SD_STOR_ installV3.4.01.89_W10W11_logoed_20220228\setup.exe', args: '-s', wait: true}
-  - !file: {path: '%TEMP%\sd_driver_extracted'}
-  - !file: {path: '%TEMP%\sd_driver.zip'}
 
   - !writeStatus: {status: 'Installing Audio Drivers'}
-  - !cmd:
-    command: |
-      curl -L -o "%TEMP%\cs35l41_driver.zip" "https://steamdeck-packages.steamos.cloud/misc/windows/drivers/Audio1_cs35l41-V1.2.1.0.zip"
+  - !powerShell:
+    command: .\installdrivers.ps1 -Driver "Audio_CS35L41" -Model "OLED"
+    exeDir: true
     wait: true
-  - !cmd:
-    command: |
-      if exist %temp%\cs35l41_driver_extracted rmdir /S /Q %temp%\cs35l41_driver_extracted
-      mkdir %temp%\cs35l41_driver_extracted
-    wait: true
-    runas: currentUserElevated
-  - !cmd:
-    command: tar -xf "%TEMP%\cs35l41_driver.zip" -C "%TEMP%\cs35l41_driver_extracted"
-    wait: true
-    runas: currentUserElevated
-  - !cmd: {command: pnputil /add-driver %TEMP%\cs35l41_driver_extracted\cs35l41-V1.2.1.0\cs35l41.inf, wait: true}
-  - !file: {path: '%TEMP%\cs35l41_driver_extracted'}
-  - !file: {path: '%TEMP%\cs35l41_driver.zip'}
 
-  - !cmd:
-    command: |
-      curl -L -o "%TEMP%\NAU88L21_driver.zip" "https://steamdeck-packages.steamos.cloud/misc/windows/drivers/Audio2_NAU88L21_x64_1.0.9.1_WHQL.zip"
+  - !powerShell:
+    command: .\installdrivers.ps1 -Driver "Audio_NAU88L21" -Model "OLED"
+    exeDir: true
     wait: true
-  - !cmd:
-    command: |
-      if exist %temp%\NAU88L21_driver_extracted rmdir /S /Q %temp%\NAU88L21_driver_extracted
-      mkdir %temp%\NAU88L21_driver_extracted
-    wait: true
-    runas: currentUserElevated
-  - !cmd:
-    command: tar -xf "%TEMP%\NAU88L21_driver.zip" -C "%TEMP%\NAU88L21_driver_extracted"
-    wait: true
-    runas: currentUserElevated
-  - !cmd: {command: 'pnputil /add-driver %TEMP%\NAU88L21_driver_extracted\NAU88L21_x64_1.0.9.1_WHQL\NAU88L21.inf', wait: true}
-  - !file: {path: '%TEMP%\NAU88L21_driver_extracted'}
-  - !file: {path: '%TEMP%\NAU88L21_driver.zip'}
 
-  - !cmd:
-    command: |
-      curl -L -o "%TEMP%\amdampdriver_driver.zip" "https://steamdeck-packages.steamos.cloud/misc/windows/drivers/amdampdriver.zip"
+  - !powerShell:
+    command: .\installdrivers.ps1 -Driver "Audio_AMDAMPDriver" -Model "OLED"
+    exeDir: true
     wait: true
-  - !cmd:
-    command: |
-      if exist %temp%\amdampdriver_driver_extracted rmdir /S /Q %temp%\amdampdriver_driver_extracted
-      mkdir %temp%\amdampdriver_driver_extracted
-    wait: true
-    runas: currentUserElevated
-  - !cmd:
-    command: tar -xf "%TEMP%\amdampdriver_driver.zip" -C "%TEMP%\amdampdriver_driver_extracted"
-    wait: true
-    runas: currentUserElevated
-  - !cmd: {command: 'pnputil /add-driver %TEMP%\amdampdriver_driver_extracted\amdampdriver\amdi2scodec.inf', wait: true}
-  - !file: {path: '%TEMP%\amdampdriver_driver_extracted'}
-  - !file: {path: '%TEMP%\amdampdriver_driver.zip'}
