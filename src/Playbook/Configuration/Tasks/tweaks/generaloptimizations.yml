@@ -14,6 +14,12 @@ actions:
     exeDir: true
     wait: true
 
+  - !writeStatus: {status: 'Setting Display To Landscape'}
+  - !powerShell:
+    command: .\setdisplaytolandscape.ps1
+    exeDir: true
+    wait: true  
+
   - !writeStatus: {status: 'Replacing On-Screen Keyboard'}
   - !cmd:
     command: curl -L -o "%TEMP%\ReplaceOSK.bat" "https://github.com/Lulech23/ReplaceOSK/releases/download/v2.4-5/ReplaceOSK.bat"
@@ -42,10 +48,4 @@ actions:
     wait: true
   - !powerShell:
     command: '$ver = (Get-ItemProperty ''HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion'').DisplayVersion; New-ItemProperty -Path ''HKLM:\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate'' -Name ''TargetReleaseVersion'' -Value $ver -PropertyType String -Force'
-    wait: true
-
-  - !writeStatus: {status: 'Setting Display To Landscape'}
-  - !powerShell:
-    command: .\setdisplaytolandscape.ps1
-    exeDir: true
     wait: true
