@@ -171,8 +171,8 @@ switch ($Driver) {
     "WiFi"         { if ($Model -eq "OLED") { Install-WiFiDriver_OLED } else { Install-WiFiDriver_LCD } }
     "Bluetooth"       { if ($Model -eq "OLED") { Install-BluetoothDriver_OLED } else { Install-BluetoothDriver_LCD } }
     "SDCard"          { if ($Model -eq "OLED") { Install-SDCardDriver_OLED } else { Install-SDCardDriver_LCD } }
-    "Audio_CS35L41"   { if ($Model -eq "OLED") { Install-AudioDriver_OLED } else { Install-AudioDriver_CS35L41_LCD } }
-    "Audio_NAU88L21"  { if ($Model -eq "OLED") { Install-AudioDriver_OLED } else { Install-AudioDriver_NAU88L21_LCD } }
+    "Audio_CS35L41"   { if ($Model -eq "OLED") { Install-AudioDriver_CS35L41_OLED } else { Install-AudioDriver_CS35L41_LCD } }
+    "Audio_NAU88L21"  { if ($Model -eq "OLED") { Install-AudioDriver_NAU88L21_OLED } else { Install-AudioDriver_NAU88L21_LCD } }
     "Audio_AMDAMPDriver"    { Install-AMDAMPDriver_OLED }
     default           { Write-Host "Invalid option. Please specify a valid driver to install." }
 }
