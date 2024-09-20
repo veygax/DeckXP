@@ -113,7 +113,7 @@ function Install-APUDriver_LCD {
 
 function Install-WiFiDriver_LCD {
     Write-Host "Installing WiFi Fix"
-    Start-Process -FilePath ".\SteamDeck-Windows-WiFi-Fix-main\Setup.bat" -Wait
+    Start-Process -FilePath ".\Drivers\SteamDeck-Windows-WiFi-Fix-main\Setup.bat" -Wait
 }
 
 function Install-BluetoothDriver_LCD {
