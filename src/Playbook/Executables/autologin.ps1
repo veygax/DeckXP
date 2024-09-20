@@ -1,7 +1,7 @@
 $username = (Get-WmiObject -Class Win32_ComputerSystem).UserName
 
 $Password = "deckxp"
-net user $username $Password /expires:never
+Set-LocalUser -Name $username -Password (ConvertTo-SecureString -AsPlainText $Password -Force)
 
 $RegPath = "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon"
 
