@@ -9,8 +9,12 @@ set "iconUrl=https://drive.google.com/uc?export=download&id=1KdbDLKe36HtutAfzo6z
 set "iconFolder=%USERPROFILE%\DeckXP"
 set "iconPath=%iconFolder%\steam_bigpicture.ico"
 
-powershell -Command "Invoke-WebRequest -Uri '%iconUrl%' -OutFile '%iconPath%'"
+if not exist "%iconFolder%" mkdir "%iconFolder%"
 
+if not exist "%iconPath%" (
+    echo Icon not found, downloading...
+    powershell -Command "Invoke-WebRequest -Uri '%iconUrl%' -OutFile '%iconPath%'"
+)
 powershell -Command ^
   $wShell = New-Object -ComObject WScript.Shell; ^
   $shortcut = $wShell.CreateShortcut('%shortcutPath%'); ^

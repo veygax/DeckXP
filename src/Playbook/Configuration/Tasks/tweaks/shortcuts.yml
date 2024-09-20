@@ -1,6 +1,6 @@
 title: Creating Shortcuts
 actions:
   - !run:
-    exe: createshortcuts.bat
+    exe: Shortcuts\createshortcuts.bat
     wait: true
     exeDir: true

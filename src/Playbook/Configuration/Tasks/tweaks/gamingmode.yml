@@ -1,8 +1,6 @@
 title: Gaming Mode Boot
 actions:
-  - !cmd: 
-    command: schtasks /create /tn "BootIntoGamingMode" /tr "steam://open/bigpicture" /sc onlogon /rl highest /f
+  - !run:
+    exe: Shortcuts\autorunshortcut.bat
     wait: true
-    runas: currentUserElevated
-
-#why does this not work?
+    exeDir: true
