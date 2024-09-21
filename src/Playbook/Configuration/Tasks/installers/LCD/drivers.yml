@@ -2,35 +2,35 @@ title: Install Drivers
 actions:
   - !writeStatus: {status: 'Installing APU Drivers'}
   - !powerShell:
-    command: .\installdrivers.ps1 -Driver "APU" -Model "LCD"
+    command: .\Scripts\installdrivers.ps1 -Driver "APU" -Model "LCD"
     exeDir: true
     wait: true
 
   - !writeStatus: {status: 'Installing WiFi Drivers'}
   - !powerShell:
-    command: .\installdrivers.ps1 -Driver "WiFi" -Model "LCD"
+    command: .\Scripts\installdrivers.ps1 -Driver "WiFi" -Model "LCD"
     exeDir: true
     wait: true
   
   - !writeStatus: {status: 'Installing Bluetooth Drivers'}
   - !powerShell:
-    command: .\installdrivers.ps1 -Driver "Bluetooth" -Model "LCD"
+    command: .\Scripts\installdrivers.ps1 -Driver "Bluetooth" -Model "LCD"
     exeDir: true
     wait: true
 
   - !writeStatus: {status: 'Installing SD Card Drivers'}
   - !powerShell:
-    command: .\installdrivers.ps1 -Driver "SDCard" -Model "LCD"
+    command: .\Scripts\installdrivers.ps1 -Driver "SDCard" -Model "LCD"
     exeDir: true
     wait: true
 
   - !writeStatus: {status: 'Installing Audio Drivers'}
   - !powerShell:
-    command: .\installdrivers.ps1 -Driver "Audio_CS35L41" -Model "LCD"
+    command: .\Scripts\installdrivers.ps1 -Driver "Audio_CS35L41" -Model "LCD"
     exeDir: true
     wait: true
 
   - !powerShell:
-    command: .\installdrivers.ps1 -Driver "Audio_NAU88L21" -Model "LCD"
+    command: .\Scripts\installdrivers.ps1 -Driver "Audio_NAU88L21" -Model "LCD"
     exeDir: true
     wait: true

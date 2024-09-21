@@ -107,13 +107,18 @@ function Install-APUDriver_LCD {
     Invoke-WebRequest -Uri "https://steamdeck-packages.steamos.cloud/misc/windows/drivers/Aerith_Sephiroth_Windows_Driver_2309131113.zip" -OutFile $zipPath
     Remove-Item -Recurse -Force $tempPath -ErrorAction Ignore
     Expand-Archive -Path $zipPath -DestinationPath $tempPath
-    Start-Process "$tempPath\GFX Driver_48.0.8.30928_230906a1-394729E-2309131113\Setup.exe" -ArgumentList "-install" -Wait
+    Start-Process "$tempPath\GFX Driver_48.0.8.30928_230906a1-394729E- 2309131113\Setup.exe" -ArgumentList "-install" -Wait
     Remove-Item $zipPath, $tempPath -Recurse -Force
 }
 
 function Install-WiFiDriver_LCD {
     Write-Host "Installing WiFi Fix"
     Start-Process -FilePath ".\Drivers\SteamDeck-Windows-WiFi-Fix-main\Setup.bat" -Wait
+    while (-not (Test-Connection google.com -Count 1 -Quiet)) {
+        Write-Host "Waiting for internet connection..." -ForegroundColor Yellow
+        Start-Sleep -Seconds 5
+    }
+    Write-Host "Internet is back online!" -ForegroundColor Green
 }
 
 function Install-BluetoothDriver_LCD {
@@ -121,10 +126,10 @@ function Install-BluetoothDriver_LCD {
     $tempPath = "$env:TEMP\bluetooth_driver_lcd"
     $zipPath = "$tempPath.zip"
     
-    Invoke-WebRequest -Uri "https://steamdeck-packages.steamos.cloud/misc/windows/drivers/FC66E-B_WIN_Bluetooth_driver.zip" -OutFile $zipPath
+    Invoke-WebRequest -Uri "https://steamdeck-packages.steamos.cloud/misc/windows/drivers/RTBlueR_FilterDriver_1041.3005_1201.2021_new_L.zip" -OutFile $zipPath
     Remove-Item -Recurse -Force $tempPath -ErrorAction Ignore
     Expand-Archive -Path $zipPath -DestinationPath $tempPath
-    pnputil /add-driver "$tempPath\FC66E-B_WIN_Bluetooth_driver\BT\x64\qcbtuart.inf" -install
+    Start-Process "$tempPath\RTBlueR_FilterDriver_1041.3005_1201.2021_new_L\InstallDriver.cmd" -Wait
     Remove-Item $zipPath, $tempPath -Recurse -Force
 }
 
@@ -136,7 +141,7 @@ function Install-SDCardDriver_LCD {
     Invoke-WebRequest -Uri "https://steamdeck-packages.steamos.cloud/misc/windows/drivers/BayHub_SD_STOR_installV3.4.01.89_W10W11_logoed_20220228.zip" -OutFile $zipPath
     Remove-Item -Recurse -Force $tempPath -ErrorAction Ignore
     Expand-Archive -Path $zipPath -DestinationPath $tempPath
-    Start-Process "$tempPath\BayHub_SD_STOR_installV3.4.01.89_W10W11_logoed_20220228\setup.exe" -ArgumentList "/S" -Wait
+    Start-Process "$tempPath\BayHub_SD_STOR_ installV3.4.01.89_W10W11_logoed_20220228\setup.exe" -ArgumentList "/S" -Wait
     Remove-Item $zipPath, $tempPath -Recurse -Force
 }
 

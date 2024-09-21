@@ -2,40 +2,40 @@ title: Install Drivers
 actions:
   - !writeStatus: {status: 'Installing APU Drivers'}
   - !powerShell:
-    command: .\installdrivers.ps1 -Driver "APU" -Model "OLED"
+    command: .\Scripts\installdrivers.ps1 -Driver "APU" -Model "OLED"
     exeDir: true
     wait: true
 
   - !writeStatus: {status: 'Installing WiFi Drivers'}
   - !powerShell:
-    command: .\installdrivers.ps1 -Driver "WiFi" -Model "OLED"
+    command: .\Scripts\installdrivers.ps1 -Driver "WiFi" -Model "OLED"
     exeDir: true
     wait: true
   
   - !writeStatus: {status: 'Installing Bluetooth Drivers'}
   - !powerShell:
-    command: .\installdrivers.ps1 -Driver "Bluetooth" -Model "OLED"
+    command: .\Scripts\installdrivers.ps1 -Driver "Bluetooth" -Model "OLED"
     exeDir: true
     wait: true
 
   - !writeStatus: {status: 'Installing SD Card Drivers'}
   - !powerShell:
-    command: .\installdrivers.ps1 -Driver "SDCard" -Model "OLED"
+    command: .\Scripts\installdrivers.ps1 -Driver "SDCard" -Model "OLED"
     exeDir: true
     wait: true
 
   - !writeStatus: {status: 'Installing Audio Drivers'}
   - !powerShell:
-    command: .\installdrivers.ps1 -Driver "Audio_CS35L41" -Model "OLED"
+    command: .\Scripts\installdrivers.ps1 -Driver "Audio_CS35L41" -Model "OLED"
     exeDir: true
     wait: true
 
   - !powerShell:
-    command: .\installdrivers.ps1 -Driver "Audio_NAU88L21" -Model "OLED"
+    command: .\Scripts\installdrivers.ps1 -Driver "Audio_NAU88L21" -Model "OLED"
     exeDir: true
     wait: true
 
   - !powerShell:
-    command: .\installdrivers.ps1 -Driver "Audio_AMDAMPDriver" -Model "OLED"
+    command: .\Scripts\installdrivers.ps1 -Driver "Audio_AMDAMPDriver" -Model "OLED"
     exeDir: true
     wait: true

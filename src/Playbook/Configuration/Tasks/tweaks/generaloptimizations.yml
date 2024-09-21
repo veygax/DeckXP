@@ -10,22 +10,18 @@ actions:
 
   - !writeStatus: {status: 'Setting Display Scale to 100%'}
   - !powerShell:
-    command: .\setdisplayscale.ps1
+    command: .\Scripts\setdisplayscale.ps1
     exeDir: true
     wait: true
 
   - !writeStatus: {status: 'Setting Display To Landscape'}
   - !powerShell:
-    command: .\setdisplaytolandscape.ps1
+    command: .\Scripts\setdisplaytolandscape.ps1
     exeDir: true
     wait: true  
 
   - !writeStatus: {status: 'Replacing On-Screen Keyboard'}
-  - !cmd:
-    command: curl -L -o "%TEMP%\ReplaceOSK.bat" "https://github.com/Lulech23/ReplaceOSK/releases/download/v2.4-5/ReplaceOSK.bat"
-    wait: true
-  - !run: {exe: '%temp%\ReplaceOSK.bat', wait: true}
-  - !file: {path: '%temp%\ReplaceOSK.bat'}
+  - !run: {exe: '.\Scripts\Third-Party\ReplaceOSK.bat', exeDir: true, wait: true}
 
   - !writeStatus: {status: 'Installing Visual C++'}
   - !cmd:
