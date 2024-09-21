@@ -1,0 +1,9 @@
+title: Install DeckXP Toolbox
+actions:
+  - !writeStatus: {status: 'Downloading DeckXP Toolbox Installer'}
+  - !cmd:
+    command: |
+      curl -L -o "%TEMP%\DeckXPToolbox-Setup.exe" "https://github.com/veygax/DeckXPToolbox/releases/latest/download/DeckXPToolbox-setup.exe"
+    wait: true
+  - !run: {exe: '%TEMP%\DeckXPToolbox-Setup.exe', args: '/S', wait: true}
+  - !file: {path: '%TEMP%\DeckXPToolbox-Setup.exe'}

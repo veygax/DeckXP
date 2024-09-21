@@ -1,8 +1,0 @@
-title: Installing Steam Deck Tools
-actions:
-  - !cmd:
-    command: |
-      curl -L -o "%TEMP%\SteamDeckTools.exe" "https://github.com/ayufan/steam-deck-tools/releases/download/0.7.3/SteamDeckTools-0.7.3-setup.exe"
-    wait: true
-  - !run: {exe: '%TEMP%\SteamDeckTools.exe', args: '/S', runas: currentUserElevated, wait: true}
-  - !file: {path: '%TEMP%\SteamDeckTools.exe'}

@@ -1,8 +1,0 @@
-title: Installing Handheld Companion
-actions:
-  - !cmd:
-    command: |
-      curl -L -o "%TEMP%\HandheldCompanion.exe" "https://github.com/Valkirie/HandheldCompanion/releases/download/0.21.5.4/HandheldCompanion-0.21.5.4.exe"
-    wait: true
-  - !run: {exe: '%TEMP%\HandheldCompanion.exe', args: '/VERYSILENT /NORESTART', runas: currentUserElevated, wait: true}
-  - !file: {path: '%TEMP%\HandheldCompanion.exe'}
