@@ -58,7 +58,7 @@ function Install-SDCardDriver_OLED {
     Invoke-WebRequest -Uri "https://steamdeck-packages.steamos.cloud/misc/windows/drivers/BayHub_SD_STOR_installV3.4.01.89_W10W11_logoed_20220228.zip" -OutFile $zipPath
     Remove-Item -Recurse -Force $tempPath -ErrorAction Ignore
     Expand-Archive -Path $zipPath -DestinationPath $tempPath
-    Start-Process "$tempPath\BayHub_SD_STOR_ installV3.4.01.89_W10W11_logoed_20220228\setup.exe" -ArgumentList "-s" -Wait
+    Start-Process "$tempPath\BayHub_SD_STOR_ installV3.4.01.89_W10W11_logoed_20220228\setup.exe" -ArgumentList "/S" -Wait
     Remove-Item $zipPath, $tempPath -Recurse -Force
 }
 
@@ -136,7 +136,7 @@ function Install-SDCardDriver_LCD {
     Invoke-WebRequest -Uri "https://steamdeck-packages.steamos.cloud/misc/windows/drivers/BayHub_SD_STOR_installV3.4.01.89_W10W11_logoed_20220228.zip" -OutFile $zipPath
     Remove-Item -Recurse -Force $tempPath -ErrorAction Ignore
     Expand-Archive -Path $zipPath -DestinationPath $tempPath
-    Start-Process "$tempPath\BayHub_SD_STOR_installV3.4.01.89_W10W11_logoed_20220228\setup.exe" -ArgumentList "-s" -Wait
+    Start-Process "$tempPath\BayHub_SD_STOR_installV3.4.01.89_W10W11_logoed_20220228\setup.exe" -ArgumentList "/S" -Wait
     Remove-Item $zipPath, $tempPath -Recurse -Force
 }
 
