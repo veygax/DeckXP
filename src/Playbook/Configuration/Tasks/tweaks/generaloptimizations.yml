@@ -8,19 +8,6 @@ actions:
     command: powercfg -h off
     wait: true
 
-  - !writeStatus: {status: 'Setting Display Scale to 100%', option: yesscaling}
-  - !powerShell:
-    command: .\Scripts\setdisplayscale.ps1
-    exeDir: true
-    wait: true
-    option: yesscaling
-
-  - !writeStatus: {status: 'Setting Display To Landscape'}
-  - !powerShell:
-    command: .\Scripts\setdisplaytolandscape.ps1
-    exeDir: true
-    wait: true  
-
   - !writeStatus: {status: 'Replacing On-Screen Keyboard'}
   - !run: {exe: '.\Scripts\Third-Party\ReplaceOSK.bat', exeDir: true, wait: true}
 
