@@ -8,11 +8,12 @@ actions:
     command: powercfg -h off
     wait: true
 
-  - !writeStatus: {status: 'Setting Display Scale to 100%'}
+  - !writeStatus: {status: 'Setting Display Scale to 100%', option: yesscaling}
   - !powerShell:
     command: .\Scripts\setdisplayscale.ps1
     exeDir: true
     wait: true
+    option: yesscaling
 
   - !writeStatus: {status: 'Setting Display To Landscape'}
   - !powerShell:
