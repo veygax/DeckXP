@@ -7,3 +7,11 @@ actions:
     wait: true
   - !run: {exe: '%TEMP%\DeckXPToolbox-Setup.exe', args: '/S', runas: currentUserElevated, wait: true}
   - !file: {path: '%TEMP%\DeckXPToolbox-Setup.exe'}
+  
+  - !writeStatus: {status: 'Downloading .NET 8.0 Runtime Installer'}
+  - !cmd:
+    command: |
+      curl -L -o "%TEMP%\net80-Setup.exe" "https://download.visualstudio.microsoft.com/download/pr/907765b0-2bf8-494e-93aa-5ef9553c5d68/a9308dc010617e6716c0e6abd53b05ce/windowsdesktop-runtime-8.0.8-win-x64.exe"
+    wait: true
+  - !run: {exe: '%TEMP%\net80-Setup.exe', args: '/install /quiet /norestart', runas: currentUserElevated, wait: true}
+  - !file: {path: '%TEMP%\net80-Setup.exe'}
