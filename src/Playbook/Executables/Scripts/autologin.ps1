@@ -1,4 +1,4 @@
-$username = (Get-WmiObject -Class Win32_ComputerSystem).UserName
+$username = (Get-WmiObject -Class Win32_ComputerSystem).UserName.Split('\')[-1]
 
 $Password = "deckxp"
 Set-LocalUser -Name $username -Password (ConvertTo-SecureString -AsPlainText $Password -Force)
