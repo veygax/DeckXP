@@ -4,7 +4,6 @@ setlocal
 set "currentDir=%CD%"
 set "startupFolder=%APPDATA%\Microsoft\Windows\Start Menu\Programs\Startup"
 set "scriptName=postinstall.ps1"
-set "setScaleScript=setdisplayscale.ps1"
 set "setLandscapeScript=setdisplaytolandscape.ps1"
 set "targetFolder=%userprofile%\DeckXP\Scripts"
 set "shortcutPath=%startupFolder%\DeckXP-Postinstall.lnk"
@@ -14,7 +13,6 @@ if not exist "%targetFolder%" (
 )
 
 copy "%currentDir%\Scripts\%scriptName%" "%targetFolder%" /Y
-copy "%currentDir%\Scripts\%setScaleScript%" "%targetFolder%" /Y
 copy "%currentDir%\Scripts\%setLandscapeScript%" "%targetFolder%" /Y
 
 powershell -Command ^
