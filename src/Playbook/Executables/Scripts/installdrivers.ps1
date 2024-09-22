@@ -36,6 +36,11 @@ function Install-WiFiDriver_OLED {
         pnputil /add-driver "$tempPath\FC66E-WIN_WiFi_driver\win10\Win10_1.0.123.1610_for_Quectel_206x\drivers\x64\qcwlan64.inf" -install
     }
     Remove-Item $zipPath, $tempPath -Recurse -Force
+    while (-not (Test-Connection google.com -Count 1 -Quiet)) {
+        Write-Host "Waiting for internet connection..." -ForegroundColor Yellow
+        Start-Sleep -Seconds 5
+    }
+    Write-Host "Internet is back online!" -ForegroundColor Green
 }
 
 function Install-BluetoothDriver_OLED {
