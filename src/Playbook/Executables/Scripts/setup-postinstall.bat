@@ -13,9 +13,12 @@ if not exist "%targetFolder%" (
     mkdir "%targetFolder%"
 )
 
-copy "%currentDir%Scripts\%scriptName%" "%targetFolder%" /Y
-copy "%currentDir%Scripts\%setScaleScript%" "%targetFolder%" /Y
-copy "%currentDir%Scripts\%setLandscapeScript%" "%targetFolder%" /Y
+if "%currentDir:~-1%"=="\" set 
+"currentDir=%currentDir:~0,-1%"
+
+copy "%currentDir%\Scripts\%scriptName%" "%targetFolder%" /Y
+copy "%currentDir%\Scripts\%setScaleScript%" "%targetFolder%" /Y
+copy "%currentDir%\Scripts\%setLandscapeScript%" "%targetFolder%" /Y
 
 powershell -Command ^
   $wShell = New-Object -ComObject WScript.Shell; ^
