@@ -13,9 +13,6 @@ if not exist "%targetFolder%" (
     mkdir "%targetFolder%"
 )
 
-if "%currentDir:~-1%"=="\" set 
-"currentDir=%currentDir:~0,-1%"
-
 copy "%currentDir%\Scripts\%scriptName%" "%targetFolder%" /Y
 copy "%currentDir%\Scripts\%setScaleScript%" "%targetFolder%" /Y
 copy "%currentDir%\Scripts\%setLandscapeScript%" "%targetFolder%" /Y
