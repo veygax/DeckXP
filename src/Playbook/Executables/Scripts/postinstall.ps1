@@ -1,8 +1,6 @@
 $landscapeScript = Resolve-Path "setdisplaytolandscape.ps1"
-$scaleScript = Resolve-Path "setdisplayscale.ps1"
 
 powershell -ExecutionPolicy Unrestricted -File $landscapeScript 0 90
-powershell -ExecutionPolicy Unrestricted -File $scaleScript
 
 # Optional delay
 Start-Sleep -Seconds 1
