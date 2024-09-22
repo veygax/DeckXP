@@ -1,7 +1,7 @@
 @echo off
 setlocal
 
-set "currentDir=%~dp0"
+set "currentDir=%CD%"
 set "startupFolder=%APPDATA%\Microsoft\Windows\Start Menu\Programs\Startup"
 set "scriptName=postinstall.ps1"
 set "setScaleScript=setdisplayscale.ps1"
