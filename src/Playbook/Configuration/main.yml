@@ -19,7 +19,7 @@ actions:
   - !task: {path: 'Tasks\installers\toolbox.yml'}
 
   - !writeStatus: {status: 'Removing Password',  option: "removepassword"}
-  - !task: {path: 'Tasks\tweaks\password.yml',  option: "removepassword"}
+  - !powerShell: {command: '.\Scripts\autologin.ps1', exeDir: true, runas: currentUserElevated, wait: true,  option: "removepassword"}
 
   - !writeStatus: {status: 'Setting up gaming mode boot',  option: "yesgamingmode"}
   - !task: {path: 'Tasks\tweaks\gamingmode.yml',  option: "yesgamingmode"}
