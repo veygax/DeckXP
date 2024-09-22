@@ -28,4 +28,4 @@ actions:
   - !task: {path: 'Tasks\tweaks\generaloptimizations.yml'}
 
   - !writeStatus: {status: 'Setting up Post-Install script'}
-  - !run: {exe: 'Scripts\setup-postinstall.ps1', runas: currentUserElevated, exeDir: true, wait: true}
+  - !run: {exe: 'Scripts\setup-postinstall.bat', runas: currentUserElevated, exeDir: true, wait: true}
