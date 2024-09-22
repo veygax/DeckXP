@@ -1,6 +1,6 @@
 $username = (Get-WmiObject -Class Win32_ComputerSystem).UserName.Split('\')[-1]
 
-$Password = "deckxp"
+$Password = ""
 Set-LocalUser -Name $username -Password (ConvertTo-SecureString -AsPlainText $Password -Force)
 
 $RegPath = "Registry::HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon"
