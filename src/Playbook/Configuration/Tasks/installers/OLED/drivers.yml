@@ -1,17 +1,17 @@
 title: Install Drivers
 actions:
+  - !writeStatus: {status: 'Installing WiFi Drivers'}
+  - !powerShell:
+    command: .\Scripts\installdrivers.ps1 -Driver "WiFi" -Model "OLED"
+    exeDir: true
+    wait: true
+
   - !writeStatus: {status: 'Installing APU Drivers'}
   - !powerShell:
     command: .\Scripts\installdrivers.ps1 -Driver "APU" -Model "OLED"
     exeDir: true
     wait: true
 
-  - !writeStatus: {status: 'Installing WiFi Drivers'}
-  - !powerShell:
-    command: .\Scripts\installdrivers.ps1 -Driver "WiFi" -Model "OLED"
-    exeDir: true
-    wait: true
-  
   - !writeStatus: {status: 'Installing Bluetooth Drivers'}
   - !powerShell:
     command: .\Scripts\installdrivers.ps1 -Driver "Bluetooth" -Model "OLED"
